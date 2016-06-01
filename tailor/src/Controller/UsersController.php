@@ -2,15 +2,51 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * User Controller
  *
  * @property \App\Model\Table\UserTable $User
  */
-class UserController extends AppController
+class UsersController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->config('authenticate', [
+            'Form' => [
+                'fields' => [
+                  'email' => 'email',
+                  'password' => 'password'
+                ]
+              ]
+        ]);
+    }
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['add','login','signup']);
+    }
 
+    public function login(){
+        $user = $this->Users->newEntity();
+        if ($this->request->is('post')) {
+            
+            $user = $this->Auth->identify();
+            
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            } else {
+                $this->Flash->error(__('Username or password is incorrect'), [
+                    'key' => 'auth'
+                ]);
+            }
+        }
+        $this->set(compact('user'));
+        $this->set('_serialize', ['user']);
+    }
     /**
      * Index method
      *
@@ -34,7 +70,7 @@ class UserController extends AppController
 //        foreach ($result as $show){
 //            print_r($show);
 //        }
-        $result = $this->User->find("getByTypeID",["userType" => 1]);
+        $result = $this->Users->find("getByTypeID",["userType" => 1]);
             //print_r($result->first());
             foreach ($result as $show){
                 print_r($show);
@@ -57,7 +93,7 @@ class UserController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->User->get($id, [
+        $user = $this->Users->get($id, [
             'contain' => []
         ]);
 
@@ -72,12 +108,33 @@ class UserController extends AppController
      */
     public function add()
     {
-        $user = $this->User->newEntity();
+        $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
-            $user = $this->User->patchEntity($user, $this->request->data);
-            if ($this->User->save($user)) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user->username = $user->email;
+            if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            }
+        }
+        print_r(compact('user'));
+        print_r(compact('user'));
+        print_r("============================================");
+        print_r(compact('user'));
+        $this->set(compact('user'));
+        $this->set('_serialize', ['user']);
+    }
+    public function signup()
+    {
+        $user = $this->Users->newEntity();
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user->username = $user->email;
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('The user has been saved.'));
+                return $this->redirect([ 'action' => 'login']);
             } else {
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
@@ -95,12 +152,12 @@ class UserController extends AppController
      */
     public function edit($id = null)
     {
-        $user = $this->User->get($id, [
+        $user = $this->Users->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->User->patchEntity($user, $this->request->data);
-            if ($this->User->save($user)) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -121,12 +178,17 @@ class UserController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $user = $this->User->get($id);
-        if ($this->User->delete($user)) {
+        $user = $this->Users->get($id);
+        if ($this->Users->delete($user)) {
             $this->Flash->success(__('The user has been deleted.'));
         } else {
             $this->Flash->error(__('The user could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+    }
+    
+    public function logout()
+    {
+        return $this->redirect($this->Auth->logout());
     }
 }

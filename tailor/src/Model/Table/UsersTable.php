@@ -11,7 +11,7 @@ use Cake\Validation\Validator;
  * User Model
  *
  */
-class UserTable extends Table
+class UsersTable extends Table
 {
 
     /**
@@ -24,7 +24,7 @@ class UserTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('user');
+        $this->table('users');
         $this->displayField('id');
         $this->primaryKey('id');
         $this->belongsTo('Profile', [
@@ -35,8 +35,8 @@ class UserTable extends Table
             'foreignKey' => 'id',
             'joinType' => 'INNER'
         ]);
+        
     }
-    
     public function findGetUsers(Query $query){
         return $q = $query->select([                
             ])->contain(["Profile"]);
@@ -101,7 +101,11 @@ class UserTable extends Table
         $validator
             ->integer('userType')
             ->requirePresence('userType', 'create')
-            ->notEmpty('userType');
+            ->notEmpty('userType')
+            ->add('userType', 'inList', [
+                'rule' => ['inList', ['1', '2']],
+                'message' => 'Please enter a valid role'
+            ]);
 
         return $validator;
     }
