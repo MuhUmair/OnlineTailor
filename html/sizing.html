@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>ONline Tailor</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/semantic.css" />
+        <link rel="stylesheet" href="css/OnlineTailor.css" />
+        <!-- jquery-1.12.3.min -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/semantic.js"></script>
+        
+    </head>
+    <body>
+        <style>
+            .color-white{
+                color: #ffffff !important;
+            }
+            .main-text-color{
+                color: #f46522 !important;
+            }
+            .text-color1{
+                color: #515151 !important;
+            }
+            .text-color2{
+                color: #515151 !important;
+            }
+            .bg-color1{
+                color: #4a89dc !important;
+            }
+            .bg-color2{
+                color: #ffffff !important;
+            }
+            .bg-color3{
+                color: #ededeb !important;
+            }
+            
+        </style>
+        <!--header-->
+        <header >
+            <div class="ui fluid secondary large top fixed stackable menu" style="background-color: #FFFFFF; border: #DEDEDE solid 1px; ">
+                <div class="ui container">
+                    <div class="header item">
+                        <div class="ui dropdown item visible-xs-flex" tabindex="0">
+                            <i class="sidebar icon"></i>
+                            <div class="menu transition hidden" tabindex="-1">
+                                <a class="item">Find a tailor</a>
+                                <a class="item">Find tailors</a>
+                                <a class="item">About Us</a>
+                            </div>
+                        </div>
+                        <a href="home.html"><img src="img/logo.png" class="hidden-xs" style="width: 180px;"/></a>
+                        
+                    </div>
+                    
+                    <div class="ui dropdown item hidden-xs" tabindex="0">
+                        Find a tailor <i class="dropdown icon"></i>
+                        <!--                        <div class="menu transition hidden" tabindex="-1">
+                                                    <div class="header item">
+                                                        <form class="ui form">
+                                                            <div class="field">
+                                                                <label>First Name</label>
+                                                                <input type="text" name="first-name" placeholder="First Name">
+                                                            </div>
+                                                            <div class="field">
+                                                                <label>Last Name</label>
+                                                                <input type="text" name="last-name" placeholder="Last Name">
+                                                            </div>
+                                                            <div class="field">
+                                                                <div class="ui checkbox">
+                                                                    <input type="checkbox" tabindex="0" class="hidden">
+                                                                    <label>I agree to the Terms and Conditions</label>
+                                                                </div>
+                                                            </div>
+                                                            <button class="ui button" type="submit">Submit</button>
+                                                        </form>
+                                                    </div>
+                                                </div>-->
+                    </div>
+                    <div class="ui dropdown item hidden-xs" tabindex="0">
+                        Find tailors <i class="dropdown icon"></i>
+                        <div class="menu transition hidden" tabindex="-1">
+                            <a class="item" href="tailors.html">Tailors</a>
+                            <a class="item" href="tailor_designs.html">Designs</a>
+                            <a class="item" href="tailor_orders.html">Tailor Orders</a>
+                            <a class="item" href="tailor_profile.html">Tailor Profile</a>
+                            <a class="item" href="design_detail.html">Dress Detail</a>
+                        </div>
+                    </div>
+                    <a class="ui item hidden-xs">
+                        About Us
+                    </a>
+                    <div class="right item visible-lg-flex hidden-xs">
+                        <a class="ui ">
+                            (123) 123-1234
+                        </a>
+                        <a href="login.html" class="ui item">
+                            Login
+                        </a>
+                        <div class="ui item ">
+                            <a href="signup.html"><button class="ui basic button">Signup</button></a>
+                        </div>
+                    </div>
+                    <div class="right item visible-md-flex visible-sm-flex visible-xs-flex hidden-xs">
+                        <div class="ui simple  right dropdown item">
+                            Login
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <a class="ui item">
+                                    (123) 123-1234
+                                </a>
+                                <a href="login.html" class="ui item">
+                                    Login
+                                </a>
+                                <a href="signup.html" class="ui item">
+                                    Signup
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </header>
+        <!--/header-->
+        <!-- Content -->
+        <div class="ui sidebar inverted vertical menu">
+            <a class="item">
+                Profile
+            </a>
+            <a class="item">
+                Design
+            </a>
+            <a class="item">
+                Orders
+            </a>
+            <a class="item">
+                Pending Orders
+            </a>
+            <a class="item">
+                History
+            </a>
+            <a class="item">
+                Payments
+            </a>
+            <a class="item">
+                Other
+            </a>
+        </div>
+        <!--Top-->
+        <div class="ui center aligned segment margin-header OTParallex" style="background-image: url(img/home/homeParallex.png);background-position: center;background-size: 100% 100%; background-repeat: no-repeat;" >
+            <div class="ui container grid">
+                <div class="sixteen wide column left aligned paddingR0 paddingB0">
+                    <div class="ui padded segment remove-border translatebg paddingB0" style="">
+                        <div class="container home-blue-handle paddingT0 paddingB0" style="margin-right: 2em">
+                            <div class="ui padded segment remove-border translatebg" >
+                                
+                                <div class="ui grid">
+                                    <div class="two column row">
+                                        <div class="left floated column">
+                                            <h1 class="ui header color-white">Tailor Profile</h1>
+                                        </div>
+                                        <div class="right floated column">
+                                            <div class="remove-circle ui tag labels">
+                                                <a class="remove-circle ui label floatR color-white label-blackBG-color" style="font-size: 14px;">
+                                                    Back to Home
+                                                </a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <!--/Top-->
+        
+        <div class="ui center aligned segment OTParallex remove-border" style="margin: 0px">
+            <div class="ui container grid">
+                <div class="four wide computer column hidden-xs">
+                    <div class="ui padded segment sixteen wide column remove-border paddingT0 home-banner-btns translatebg " style="padding-top: 0px;">
+                        <div class="ui small item menu ">
+                            <!--<a class="item">
+                                <span class="text-color1 text">Mokawar</span>
+                            </a>-->
+                            <div class="ui dropdown item">
+                                <span class="text">Profile</span>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="ui small item menu">
+                            <a class="item">
+                                <span class="text-color1">Design</span>
+                            </a>
+                            
+                        </div>
+                        <div class="ui small item menu">
+                            <a class="item">
+                                <span class="text-color1">Orders</span>
+                            </a>
+                            
+                        </div>
+                        <div class="ui small item menu">
+                            <a class="item">
+                                <span class="text-color1">Pending Orders</span>
+                            </a>
+                            
+                        </div>
+                        <div class="ui small item menu">
+                            <a class="item">
+                                <span class="text-color1">History</span>
+                            </a>
+                            
+                        </div>
+                        <div class="ui small item menu">
+                            <a class="item">
+                                <span class="text-color1">Payments</span>
+                            </a>
+                            
+                        </div>
+                        <div class="ui small item menu">
+                            <a class="item">
+                                <span class="text-color1">Other</span>
+                            </a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="sixteen wide mobile  eleven wide tablet eleven wide computer column padding-xs-2em padding0" style="">
+                    <div class="ui segment remove-border remove-border-radius paddingL0" style="margin-top: 1em; text-align: left;">
+                        <i class="sidebar big icon OTSide-Menu visible-xs-inline-block" style='margin-top: -12px;color: black;'></i>
+                        <h1 class="ui left aligned header main-text-color" style="font-weight: normal;display: inline-block;margin-top: 0px;">Size Chart</h1>
+                        
+                    </div>
+                    <div class="ui container grid">
+                        <div class="ui segment fifteen wide mobile  fifteen wide tablet fifteen wide computer column remove-border-radius remove-border marginL0-lg " style="padding: 0px;margin: 1em;">
+                            <div class="ui left aligned segment remove-border paddingL0">
+                                <p>Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos choro alterum definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.</p>
+                                
+                            </div>
+                            <div class="ui container grid left aligned segment remove-border">
+                                <div class="one column row">
+                                    <form class="ui form sixteen wide mobile  sixteen wide tablet sixteen wide computer column paddingL0">
+                                        <div class="field">
+                                            <div class="two fields">
+                                                <div class="field">
+                                                    <input type="text" name="shipping[first-name]" placeholder="Shoulder length">
+                                                </div>
+                                                <div class="field">
+                                                    <input type="text" name="shipping[last-name]" placeholder="Waist cuantum">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="two fields">
+                                                <div class="field">
+                                                    <input type="text" name="shipping[first-name]" placeholder="Sleeve length">
+                                                </div>
+                                                <div class="field">
+                                                    <input type="text" name="shipping[last-name]" placeholder="The bottom width">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="two fields">
+                                                <div class="field">
+                                                    <input type="text" name="shipping[first-name]" placeholder="Sleeve width">
+                                                </div>
+                                                <div class="field">
+                                                    <input type="text" name="shipping[last-name]" placeholder="Total length">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <div class="two fields">
+                                                <div class="field">
+                                                    <input type="text" name="shipping[first-name]" placeholder="Chest">
+                                                </div>
+                                                <div class="field">
+                                                    <input type="text" name="shipping[last-name]" placeholder="Total length">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="one column row">
+                                    <div class="column paddingL0">
+                                        <div class="ui compact menu remove-border-radius remove-box-shedow remove-border ">
+                                            <div class="ui tag labels rigth-arrow remove-circle ">
+                                                <a class="ui label product-detail-label label-blue-blackBG-color color-white">
+                                                    Save and Next
+                                                </a>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="ui center aligned segment OTParallex remove-border" style="margin: 0px;">
+            <div class="ui center aligned centered grid container paddingTB3rem " style="">
+                <div class="ui centered grid">
+                    
+                    <div class="sixteen wide row">
+                        <h1 class="marginL12 ui center aligned header" style="margin-left: 0px !important;">
+                            Need help? Real people will answer your call right away.
+                        </h1>
+                    </div>
+                    <div class="sixteen wide row">
+                        <p>
+                            Call(877) 999-2681 or email support@mydomain.com
+                        </p>
+                    </div>
+                    <div class="sixteen wide row">
+                        <div class="ui padded segment remove-border paddingT0 translatebg" style="padding-left: 0px;">
+                            <button class="ui grey button remove-border-radius">LEARN MORE ABOUT MY TAILOR<span class="visible-lg-inline-block"></span></button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <!-- /Content -->
+        <footer>
+            <div class="ui center aligned segment OTParallex remove-border" style="margin: 0px;background-color: #508aba;">
+                <div class="ui center aligned centered grid container paddingTB3rem " style="">
+                    <div class="ui centered grid" style="width: 100%;">
+                        <div class="eight wide tablet eight wide computer column">
+                            <div class="ui centered grid">
+                                <div class="sixteen wide mobile five wide computer column paddingT0">
+                                    <div class="ui link list">
+                                        <div class="active item text-color1">GET TO KNOW US</div>
+                                        <a class="item color-white">About Us</a>
+                                        <a class="item color-white">Reviews & Testimonials</a>
+                                        <a class="item color-white">Safety</a>
+                                        <a class="item color-white">Security</a>
+                                        <a class="item color-white">News</a>
+                                        <a class="item color-white">Contact Us</a>
+                                        
+                                    </div>
+                                </div>
+                                <div class="sixteen wide mobile five wide computer column paddingT0">
+                                    <div class="ui link list">
+                                        <div class="active item text-color1">LEARN WITH US</div>
+                                        <a class="item color-white">Search for a Tailor</a>
+                                        <a class="item color-white">Request a Tailor</a>
+                                        
+                                    </div>
+                                </div>
+                                <div class="sixteen wide mobile five wide computer column paddingT0">
+                                    <div class="ui link list">
+                                        <div class="active item text-color1">WORK WITH US</div>
+                                        <a class="item color-white">About Us</a>
+                                        <a class="item color-white">Become a Tailor</a>
+                                        <a class="item color-white">Partners</a>
+                                        <a class="item color-white">Affiliates</a>
+                                        <a class="item color-white">Careers</a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="ui small images" style="padding-left: 1rem;margin-top: 20px;">
+                                <img class="ui image" src="img/bbb-logo.png">
+                                <img class="ui image" src="img/ssl_verisign.png">
+                                
+                            </div>
+                            
+                            <div class="ui mini images" style="padding-left: 1rem;margin-top: 20px;">
+                                <img class="ui image marginL15" src="img/footer/facebook-logo-button.png">
+                                <img class="ui image marginL15" src="img/footer/twitter-logo-button.png">
+                                <img class="ui image marginL15" src="img/footer/linkedin.png">
+                                <img class="ui image marginL15" src="img/footer/youtube-logotype.png">
+                            </div>
+                            
+                        </div>
+                        <div class="eight wide tablet eight wide computer column" style="">
+                            <div class="ui centered grid" style="width: 100%;">
+                                
+                                <div class="sixteen wide tablet sixteen wide computer column" style="background-color: #5d9cec;">
+                                    <h4 class="marginL12 ui left aligned header color-white" style="margin-left: 0px !important;">
+                                        Find a Tailor fast, Get the app.
+                                    </h4>
+                                    <p class="color-white">Send a download link to your phone</p>
+                                    
+                                    <form>
+                                        <div class="ui form">
+                                            
+                                            <div class="fields">
+                                                <div class="eight wide field">
+                                                    <input type="text" placeholder="(877)999-2681">
+                                                </div>
+                                                
+                                                <div class="two wide field">
+                                                    <button class="ui orange button">Send</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <p class="color-white">Message and data rates may apply</p>
+                                    <div class="ui large horizontal divided list">
+                                        <div class="item">
+                                            <img class="ui image" src="img/technology.png">
+                                            <div class="content">
+                                                <!--<div class="header color-white">App Store</div>-->
+                                                <div class="header color-white">Coming Soon</div>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <img class="ui image" src="img/play-store.png">
+                                            <div class="content">
+                                                <!--<div class="header color-white">Google Play</div>-->
+                                                <div class="header color-white">Coming Soon</div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <!--
+                                <div class="sixteen wide tablet sixteen wide computer right floated column mar" style="background-color: #5d9cec;margin-top: 20px;">
+                                    <h4 class="marginL12 ui left aligned header color-white" style="margin-left: 0px !important;">
+                                        Need help dinging a Tailor
+                                    </h4>
+                                    
+                                    <form>
+                                        <div class="ui form">
+                                            
+                                            <div class="fields">
+                                                <div class="five wide field">
+                                                    <button class="fluid ui olive button">Green</button>
+                                                </div>
+                                                
+                                                <div class="six wide field">
+                                                    <div class="ui large horizontal divided list">
+                                                        <div class="item">
+                                                            <img class="ui image" src="img/phone-receiver.png">
+                                                            <div class="content">
+                                                                <div class="header color-white">Google Play</div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    
+                                </div>
+                                -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script type="text/javascript">
+            $(function(){
+                $('.ui.dropdown').dropdown();
+                $(".OTSlider >i:nth-child(2)").click(function(){
+                    $('.shape').shape('flip left');
+                });
+                $(".OTSlider >i:nth-child(3)").click(function(){
+                    $('.shape').shape('flip right');
+                });
+                $('.rating')
+                        .rating({
+                            initialRating: 2,
+                    maxRating: 5
+                });
+                $(".OTSide-Menu").on("click",function(){
+                    $('.ui.sidebar').sidebar('toggle');
+                });
+                
+            });
+            var imageIndex = 1;
+            $(document).ready(function() {
+                $(".slider-img-container img").hover(function(){
+                    $('#main-img').attr('src',$(this).attr('src').replace('thumb/', ''));
+                    imageIndex = $(this).data("imgindex");
+                });
+                var imgSwap = [];
+                $(".slider-img-container img").each(function(){
+                    imgUrl = this.src.replace('thumb/', '');
+                    imgSwap.push(imgUrl);
+                });
+                $(imgSwap).preload();
+            });
+            $.fn.preload = function() {
+                this.each(function(){
+                    $('<img/>')[0].src = this;
+                });
+            }
+
+        </script>
+    </body>
+    
+</html>
