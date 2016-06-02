@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Tailor Admin</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/semantic.css" />
+        <link rel="stylesheet" href="css/OnlineTailor.css" />
+        <link rel="stylesheet" href="css/hover.css" />
+        <!-- jquery-1.12.3.min -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/semantic.js"></script>
+        
+    </head>
+    <body>
+        <div class="ui  visible sidebar inverted vertical menu">
+            <h1 class="ui header" style="color: white;margin-top: 20px;margin-left: 10px;">Tailor Admin</h1>
+            <a class="item" href="<?php echo $this->Url->build([
+                                                            "controller" => "peoplesaying",
+                                                            "action" => "index"
+                                                        ]);
+                                                        ?>">
+                People Sayings
+            </a>
+            <a class="item">
+                2
+            </a>
+            <a class="item">
+                3
+            </a>
+        </div>
+    </body>
+</html>

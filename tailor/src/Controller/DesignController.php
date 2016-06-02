@@ -18,16 +18,7 @@ class DesignController extends AppController
      */
     public function index()
     {
-        //$design = $this->paginate($this->Design);
-        $result = $this->Design->find("getDesigns");
-            //print_r($result->first());
-            foreach ($result as $show){
-                print_r($show);
-            }
-        
-         
-//         }
-        exit;
+        $design = $this->paginate($this->Design);
         
         $this->set(compact('design'));
         $this->set('_serialize', ['design']);

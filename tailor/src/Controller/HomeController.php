@@ -18,7 +18,10 @@ class HomeController extends AppController
      */
     public function index()
     {
+        $TRPS = \Cake\ORM\TableRegistry::get("peoplesaying");
+        $sayings = $TRPS->find("all");
         
+        $this->set(["sayings" => $sayings]);
     }
 
 }

@@ -177,41 +177,32 @@
                         <div class="OTSlider marginL12">
                             <div class="ui people shape ">
                                 <div class="sides">
-                                    <div class="active side">
+                                <?php 
+                                    $i = 0;
+                                    foreach ($sayings as $saying): 
+                                    if($saying['type'] == 1){
+                                ?>
+                                    <div class="<?php if ($i == 0){ echo "active"; $i = 1;}?> side">
                                         <div class="ui card">
                                             <div class="content">
-                                                <div class="header">Steve Jobes</div>
+                                                <div class="header">
+                                                    <?php echo $saying['name'];?>
+                                                </div>
                                                 <div class="description">
-                                                    Steve Jobes is a fictional character designed to resemble someone familiar to readers.
-                                                    Steve Jobes is a fictional character designed to resemble someone familiar to readers.
+                                                    <p>
+                                                        <?php echo $saying['description'];?>
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div class="extra content">
                                                 <span class="right floated">
-                                                    Joined in 2014
+                                                    <?php echo $saying['city'];?> in 2014
                                                 </span>
                                                 
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="side">
-                                        <div class="ui card">
-                                            <div class="content">
-                                                <a class="header">Stevie Feliciano</a>
-                                                
-                                                <div class="description">
-                                                    Steve Jobes is a fictional character designed to resemble someone familiar to readers.
-                                                    Steve Jobes is a fictional character designed to resemble someone familiar to readers.
-                                                </div>
-                                            </div>
-                                            <div class="extra content">
-                                                <span class="right floated">
-                                                    Joined in 2014
-                                                </span>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
+                                <?php } endforeach; ?>
                                 </div>
                             </div>   
                             <i class="angle left icon"></i>
@@ -224,41 +215,33 @@
                         <div class="OTSlider marginL12">
                             <div class="ui people shape ">
                                 <div class="sides">
-                                    <div class="active side">
+                                    <?php 
+                                    $i = 0;
+                                    foreach ($sayings as $saying): 
+                                    if($saying['type'] == 2){
+                                ?>
+                                    <div class="<?php if ($i == 0){ echo "active"; $i = 1;}?> side">
                                         <div class="ui card">
                                             <div class="content">
-                                                <div class="header">Steve Jobes</div>
+                                                <div class="header">
+                                                    <?php echo $saying['name'];?>
+                                                </div>
                                                 <div class="description">
-                                                    Steve Jobes is a fictional character designed to resemble someone familiar to readers.
-                                                    Steve Jobes is a fictional character designed to resemble someone familiar to readers.
+                                                    <p>
+                                                        <?php echo $saying['description'];?>
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div class="extra content">
                                                 <span class="right floated">
-                                                    Joined in 2014
+                                                    <?php echo $saying['city'];?> in 2014
                                                 </span>
                                                 
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="side">
-                                        <div class="ui card">
-                                            <div class="content">
-                                                <a class="header">Stevie Feliciano</a>
-                                                
-                                                <div class="description">
-                                                    Steve Jobes is a fictional character designed to resemble someone familiar to readers.
-                                                    Steve Jobes is a fictional character designed to resemble someone familiar to readers.
-                                                </div>
-                                            </div>
-                                            <div class="extra content">
-                                                <span class="right floated">
-                                                    Joined in 2014
-                                                </span>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
+                                <?php } endforeach; ?>
+                                
                                 </div>
                             </div>   
                             <i class="angle left icon"></i>

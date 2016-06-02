@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Event\Event;
 /**
  * Peoplesaying Controller
  *
@@ -10,6 +10,17 @@ use App\Controller\AppController;
  */
 class PeoplesayingController extends AppController
 {
+
+    public function beforeFilter(Event $event)
+    {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->redirect(array(
+                'controller' => 'home',
+                'action' => 'index', 
+                $this->request->data['ItQuery']['id'])
+            );
+        }
+    }
 
     /**
      * Index method
@@ -19,7 +30,7 @@ class PeoplesayingController extends AppController
     public function index()
     {
         $peoplesaying = $this->paginate($this->Peoplesaying);
-
+        $this->viewBuilder()->layout('admin_layout');
         $this->set(compact('peoplesaying'));
         $this->set('_serialize', ['peoplesaying']);
     }
@@ -33,6 +44,7 @@ class PeoplesayingController extends AppController
      */
     public function view($id = null)
     {
+        $this->viewBuilder()->layout('admin_layout');
         $peoplesaying = $this->Peoplesaying->get($id, [
             'contain' => []
         ]);
@@ -48,6 +60,8 @@ class PeoplesayingController extends AppController
      */
     public function add()
     {
+        $this->viewBuilder()->layout('admin_layout');
+        
         $peoplesaying = $this->Peoplesaying->newEntity();
         if ($this->request->is('post')) {
             $peoplesaying = $this->Peoplesaying->patchEntity($peoplesaying, $this->request->data);
@@ -71,6 +85,7 @@ class PeoplesayingController extends AppController
      */
     public function edit($id = null)
     {
+        $this->viewBuilder()->layout('admin_layout');
         $peoplesaying = $this->Peoplesaying->get($id, [
             'contain' => []
         ]);
@@ -85,6 +100,7 @@ class PeoplesayingController extends AppController
         }
         $this->set(compact('peoplesaying'));
         $this->set('_serialize', ['peoplesaying']);
+
     }
 
     /**
@@ -96,6 +112,7 @@ class PeoplesayingController extends AppController
      */
     public function delete($id = null)
     {
+        
         $this->request->allowMethod(['post', 'delete']);
         $peoplesaying = $this->Peoplesaying->get($id);
         if ($this->Peoplesaying->delete($peoplesaying)) {
@@ -104,5 +121,14 @@ class PeoplesayingController extends AppController
             $this->Flash->error(__('The peoplesaying could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+    }
+    
+    public function isAuthorized($user)
+    {
+        // Admin can access every action
+        if (isset($user['userType']) && $user['userType'] === 3) {
+            return true;
+        }
+        return false;
     }
 }

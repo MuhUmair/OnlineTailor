@@ -82,7 +82,7 @@
                                             <div class="field" style="    margin-left: 0px;">
                                                 <div class="ui left floated compact segment">
                                                     <div class="ui fitted checkbox">
-                                                        <input type="checkbox" name="isNews">
+                                                        <input type="checkbox" name="isNews" >
                                                         <label></label>
                                                     </div>
                                                 </div>

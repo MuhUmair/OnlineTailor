@@ -119,10 +119,6 @@ class UsersController extends AppController
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
-        print_r(compact('user'));
-        print_r(compact('user'));
-        print_r("============================================");
-        print_r(compact('user'));
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
@@ -130,13 +126,17 @@ class UsersController extends AppController
     {
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
+            if(isset($this->request->data["isNews"]) && $this->request->data["isNews"] == 'on'){
+                $this->request->data["isNews"] = 1;
+            }
+            //print_r($this->request->data["isNews"]);exit;
             $user = $this->Users->patchEntity($user, $this->request->data);
             $user->username = $user->email;
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect([ 'action' => 'login']);
             } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                //$this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
         $this->set(compact('user'));
@@ -190,5 +190,23 @@ class UsersController extends AppController
     public function logout()
     {
         return $this->redirect($this->Auth->logout());
+    }
+    
+    public function isAuthorized($user)
+    {
+        print_r($user);exit;
+        // Admin can access every action
+        if (isset($user['userType']) && $user['userType'] === 3) {
+            return true;
+        }
+        // The owner of an article can edit and delete it
+        if (in_array($this->request->action, ['edit', 'delete'])) {
+            $articleId = (int)$this->request->params['pass'][0];
+            if ($this->Users->isOwnedBy($articleId, $user['id'])) {
+                return true;
+            }
+        }
+
+        return parent::isAuthorized($user);
     }
 }
