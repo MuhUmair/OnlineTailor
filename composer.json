@@ -1,0 +1,5 @@
+{
+    "require": {
+        "cakemanager/cakephp-utils": "dev-master"
+    }
+}

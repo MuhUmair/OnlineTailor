@@ -27,6 +27,7 @@ class DesignTable extends Table
         $this->table('design');
         $this->displayField('id');
         $this->primaryKey('id');
+        
     }
 
     public function findGetDesigns(Query $query){

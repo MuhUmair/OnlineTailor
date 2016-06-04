@@ -27,6 +27,18 @@ class ProfileTable extends Table
         $this->table('profile');
         $this->displayField('id');
         $this->primaryKey('id');
+        $this->belongsTo('users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->addBehavior('Utils.Uploadable', [
+            'avatar' => [                                                    //field_name of form input
+                   'field' => 'id',                                          //Any field from form (id=5)
+                   'path' => '{ROOT}{DS}{WEBROOT}{DS}uploads{DS}',           // Set path to webroot
+                   'fileName' => '{field}.{extension}'                       // File name with extension
+                   ],
+                ]
+           );
     }
 
     /**
@@ -84,6 +96,10 @@ class ProfileTable extends Table
             ->requirePresence('lat', 'create')
             ->notEmpty('lat');
 
+        $validator
+            ->requirePresence('avatar', 'create')
+            ;
+        
         $validator
             ->requirePresence('glong', 'create')
             ->notEmpty('glong');

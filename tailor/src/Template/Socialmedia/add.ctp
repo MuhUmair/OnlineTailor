@@ -10,7 +10,7 @@
         <legend><?= __('Add Socialmedia') ?></legend>
         <?php
             echo $this->Form->input('link');
-            echo $this->Form->input('nameID');
+            echo $this->Form->input('name');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

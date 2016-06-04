@@ -5,7 +5,8 @@
     </ul>
 </nav>
 <div class="profile form large-9 medium-8 columns content">
-    <?= $this->Form->create($profile) ?>
+
+    <?= $this->Form->create($profile, ['type' => 'file']) ?>
     <fieldset>
         <legend><?= __('Add Profile') ?></legend>
         <?php
@@ -20,8 +21,11 @@
             echo $this->Form->input('happyCustomerCount');
             echo $this->Form->input('lat');
             echo $this->Form->input('glong');
+            echo $this->Form->input('avatar', ['type' => 'file']);
         ?>
+
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
+<img src="http://xampp\htdocs\OnlineTailor\tailor\webroot\media\profiles\Hrithik-Roshan_4.jpg" />
 </div>

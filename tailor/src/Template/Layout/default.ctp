@@ -78,6 +78,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     </div>
                     
                     <div class="ui dropdown item hidden-xs" tabindex="0">
+                        
                         Find a tailor <i class="dropdown icon"></i>
                         <!--                        <div class="menu transition hidden" tabindex="-1">
                                                     <div class="header item">
@@ -116,14 +117,28 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     </a>
                     <div class="right item visible-lg-flex hidden-xs">
                         <a class="ui ">
-                            (123) 123-1234
+                            <?php echo $cContact[0]['contactNo']?>
                         </a>
-                        <a href="<?php echo $this->Url->build(["controller" => "users","action" => "login"]);?>" class="ui item">
-                            Login
-                        </a>
-                        <div class="ui item ">
-                            <a href="<?php echo $this->Url->build(["controller" => "users","action" => "signup"]);?>"><button class="ui basic button">Signup</button></a>
-                        </div>
+                        <?php if(isset($cUser)){ ?>
+                            <div class="ui item ">
+                                <a href="<?php echo $this->Url->build(["controller" => "users","action" => "logout"]);?>"><button class="ui basic button">Logout</button></a>
+                            </div>
+                        <?php } ?>
+                        <?php if(!isset($cUser)){ ?>
+                            <a href="<?php echo $this->Url->build(["controller" => "users","action" => "login"]);?>" class="ui item">
+                                Login
+                            </a>
+
+                            <div class="ui item ">
+                                <a href="<?php echo $this->Url->build(["controller" => "users","action" => "signup"]);?>"><button class="ui basic button">Signup</button></a>
+                            </div>
+                        <?php } ?>
+                        <?php if(isset($cUser) && $cUser['userType'] == 3 ){?>
+                            <a href="<?php echo $this->Url->build(["controller" => "peoplesaying","action" => "index"]);?>" class="ui ">
+                                Admin
+                            </a>
+                        <?php } ?>
+                        
                     </div>
                     <div class="right item visible-md-flex visible-sm-flex visible-xs-flex hidden-xs">
                         <div class="ui simple  right dropdown item">
@@ -196,10 +211,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                             </div>
                             
                             <div class="ui mini images" style="padding-left: 1rem;margin-top: 20px;">
-                                <?= $this->Html->image('footer/facebook-logo-button.png',array('class' => 'ui image marginL15'));?>
-                                <?= $this->Html->image('footer/twitter-logo-button.png',array('class' => 'ui image marginL15'));?>
-                                <?= $this->Html->image('footer/linkedin.png',array('class' => 'ui image marginL15'));?>
-                                <?= $this->Html->image('footer/youtube-logotype.png',array('class' => 'ui image marginL15'));?>
+                                <a href="http://<?php echo $cSocialeMedia[0]["link"]?>" target="_blank"><?= $this->Html->image('footer/facebook-logo-button.png',array('class' => 'ui image marginL15'));?></a>
+                                <a href="http://<?php echo $cSocialeMedia[1]["link"]?>" target="_blank"><?= $this->Html->image('footer/twitter-logo-button.png',array('class' => 'ui image marginL15'));?></a>
+                                <a href="http://<?php echo $cSocialeMedia[2]["link"]?>" target="_blank"><?= $this->Html->image('footer/linkedin.png',array('class' => 'ui image marginL15'));?></a>
+                                <a href="http://<?php echo $cSocialeMedia[3]["link"]?>" target="_blank"><?= $this->Html->image('footer/youtube-logotype.png',array('class' => 'ui image marginL15'));?></a>
                                 
                             </div>
                             

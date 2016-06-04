@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Socialmedia Controller
@@ -11,6 +12,17 @@ use App\Controller\AppController;
 class SocialmediaController extends AppController
 {
 
+    public function beforeFilter(Event $event)
+    {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->redirect(array(
+                'controller' => 'home',
+                'action' => 'index', 
+                $this->request->data['ItQuery']['id'])
+            );
+        }
+    }
+
     /**
      * Index method
      *
@@ -19,7 +31,7 @@ class SocialmediaController extends AppController
     public function index()
     {
         $socialmedia = $this->paginate($this->Socialmedia);
-
+        $this->viewBuilder()->layout('admin_layout');
         $this->set(compact('socialmedia'));
         $this->set('_serialize', ['socialmedia']);
     }
@@ -33,6 +45,7 @@ class SocialmediaController extends AppController
      */
     public function view($id = null)
     {
+        $this->viewBuilder()->layout('admin_layout');
         $socialmedia = $this->Socialmedia->get($id, [
             'contain' => []
         ]);
@@ -48,6 +61,7 @@ class SocialmediaController extends AppController
      */
     public function add()
     {
+        $this->viewBuilder()->layout('admin_layout');
         $socialmedia = $this->Socialmedia->newEntity();
         if ($this->request->is('post')) {
             $socialmedia = $this->Socialmedia->patchEntity($socialmedia, $this->request->data);
@@ -71,6 +85,7 @@ class SocialmediaController extends AppController
      */
     public function edit($id = null)
     {
+        $this->viewBuilder()->layout('admin_layout');
         $socialmedia = $this->Socialmedia->get($id, [
             'contain' => []
         ]);
@@ -96,6 +111,7 @@ class SocialmediaController extends AppController
      */
     public function delete($id = null)
     {
+        $this->viewBuilder()->layout('admin_layout');
         $this->request->allowMethod(['post', 'delete']);
         $socialmedia = $this->Socialmedia->get($id);
         if ($this->Socialmedia->delete($socialmedia)) {
@@ -104,5 +120,17 @@ class SocialmediaController extends AppController
             $this->Flash->error(__('The socialmedia could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+    }
+    public function isAuthorized($user)
+    {
+        // The owner of an article can edit and delete it
+        if (in_array($this->request->action, ['add', 'delete'])) {
+            return false;
+        }
+        // Admin can access every action
+        if (isset($user['userType']) && $user['userType'] === 3) {
+            return true;
+        }
+        return false;
     }
 }

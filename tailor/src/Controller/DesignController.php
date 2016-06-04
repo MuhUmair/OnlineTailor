@@ -18,10 +18,11 @@ class DesignController extends AppController
      */
     public function index()
     {
-        $design = $this->paginate($this->Design);
+        $designs = $this->paginate($this->Design);
         
-        $this->set(compact('design'));
-        $this->set('_serialize', ['design']);
+        $this->set(compact('designs'));
+        $this->set('_serialize', ['designs']);
+        $this->set('mDesigns', $designs);
     }
 
     /**

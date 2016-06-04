@@ -46,9 +46,8 @@ class SocialmediaTable extends Table
             ->notEmpty('link');
 
         $validator
-            ->integer('nameID')
-            ->requirePresence('nameID', 'create')
-            ->notEmpty('nameID');
+            ->requirePresence('name', 'create')
+            ->notEmpty('name');
 
         return $validator;
     }

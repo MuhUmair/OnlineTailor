@@ -69,6 +69,11 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+        $this->set('cUser', $this->Auth->user());
+        $conTable = \Cake\ORM\TableRegistry::get("contact");
+        $this->set('cContact', $conTable->find("all")->toArray());
+        $SMTable = \Cake\ORM\TableRegistry::get("socialmedia");
+        $this->set('cSocialeMedia', $SMTable->find("all")->toArray());
     }
     
 }

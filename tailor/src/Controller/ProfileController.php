@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Profile Controller
@@ -10,7 +11,11 @@ use App\Controller\AppController;
  */
 class ProfileController extends AppController
 {
-
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->isAuthorized($this->Auth->user());
+    }
     /**
      * Index method
      *
@@ -33,10 +38,21 @@ class ProfileController extends AppController
      */
     public function view($id = null)
     {
-        $profile = $this->Profile->get($id, [
-            'contain' => []
-        ]);
+        $profile = "";
+        //print_r($this->Auth->user("id"));exit;
+        if($id == null){
+            $id = $this->Auth->user("id");
+            $profile = $this->Profile->find("all", [
+                'conditions' => ["profile.user_id" => "$id"],
+                'contain' => ['users']
+            ])->first();
+        }else {
+            $profile = $this->Profile->get($id, [
+                'contain' => []
+            ]);
 
+        }
+        //print_r($profile);exit;
         $this->set('profile', $profile);
         $this->set('_serialize', ['profile']);
     }
@@ -50,7 +66,17 @@ class ProfileController extends AppController
     {
         $profile = $this->Profile->newEntity();
         if ($this->request->is('post')) {
+            $avatarObj = $this->request->data['avatar'];
+            
+            if(isset($avatarObj["name"])){
+                $imgPath = 'media\\profiles\\' . date("Y_m_d_H_i_s") .".". $avatarObj['name'];
+                //print_r($imgPath );exit;
+                move_uploaded_file($avatarObj["tmp_name"], WWW_ROOT . $imgPath);
+                $this->request->data['avatar'] = $imgPath;
+            }
+            //print_r($avatarObj);exit;
             $profile = $this->Profile->patchEntity($profile, $this->request->data);
+            //print_r($profile);exit;
             if ($this->Profile->save($profile)) {
                 $this->Flash->success(__('The profile has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -71,6 +97,9 @@ class ProfileController extends AppController
      */
     public function edit($id = null)
     {
+        if($id == null){
+            $id = $this->Auth->user("id");
+        }
         $profile = $this->Profile->get($id, [
             'contain' => []
         ]);
@@ -104,5 +133,14 @@ class ProfileController extends AppController
             $this->Flash->error(__('The profile could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+    }
+    public function isAuthorized($user)
+    {
+        // The owner of an article can edit and delete it
+        if (in_array($this->request->action, ['delete', 'add', 'index'])) {
+            return $this->redirect(['action' => 'view']);
+        }
+
+        return true;
     }
 }

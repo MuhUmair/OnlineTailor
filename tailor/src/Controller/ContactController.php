@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Contact Controller
@@ -11,6 +12,17 @@ use App\Controller\AppController;
 class ContactController extends AppController
 {
 
+    public function beforeFilter(Event $event)
+    {
+        if(!$this->isAuthorized($this->Auth->user())){
+            $this->redirect(array(
+                'controller' => 'home',
+                'action' => 'index', 
+                $this->request->data['ItQuery']['id'])
+            );
+        }
+    }
+
     /**
      * Index method
      *
@@ -19,7 +31,7 @@ class ContactController extends AppController
     public function index()
     {
         $contact = $this->paginate($this->Contact);
-
+        $this->viewBuilder()->layout('admin_layout');
         $this->set(compact('contact'));
         $this->set('_serialize', ['contact']);
     }
@@ -33,6 +45,7 @@ class ContactController extends AppController
      */
     public function view($id = null)
     {
+        $this->viewBuilder()->layout('admin_layout');
         $contact = $this->Contact->get($id, [
             'contain' => []
         ]);
@@ -48,6 +61,7 @@ class ContactController extends AppController
      */
     public function add()
     {
+        $this->viewBuilder()->layout('admin_layout');
         $contact = $this->Contact->newEntity();
         if ($this->request->is('post')) {
             $contact = $this->Contact->patchEntity($contact, $this->request->data);
@@ -71,6 +85,7 @@ class ContactController extends AppController
      */
     public function edit($id = null)
     {
+        $this->viewBuilder()->layout('admin_layout');
         $contact = $this->Contact->get($id, [
             'contain' => []
         ]);
@@ -96,6 +111,7 @@ class ContactController extends AppController
      */
     public function delete($id = null)
     {
+        $this->viewBuilder()->layout('admin_layout');
         $this->request->allowMethod(['post', 'delete']);
         $contact = $this->Contact->get($id);
         if ($this->Contact->delete($contact)) {
@@ -104,5 +120,17 @@ class ContactController extends AppController
             $this->Flash->error(__('The contact could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+    }
+    public function isAuthorized($user)
+    {
+        // The owner of an article can edit and delete it
+        if (in_array($this->request->action, ['add', 'delete'])) {
+            return false;
+        }
+        // Admin can access every action
+        if (isset($user['userType']) && $user['userType'] === 3) {
+            return true;
+        }
+        return false;
     }
 }

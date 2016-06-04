@@ -36,18 +36,18 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <body>
         <div class="ui visible sidebar inverted vertical menu">
             <h1 class="ui header" style="color: white;margin-top: 20px;margin-left: 10px;">Tailor Admin</h1>
-            <a class="item" href="<?php echo $this->Url->build([
-                                                            "controller" => "peoplesaying",
-                                                            "action" => "index"
-                                                        ]);
-                                                        ?>">
-                People Sayings
+            <a class="item" href="<?php echo $this->Url->build(["controller" => "home","action" => "index"]);?>">
+                Home
             </a>
-            <a class="item">
-                2
+            
+            <a class="item" href="<?php echo $this->Url->build(["controller" => "peoplesaying","action" => "index"]);?>">
+                What People Say
             </a>
-            <a class="item">
-                3
+            <a class="item" href="<?php echo $this->Url->build(["controller" => "socialmedia","action" => "index"]);?>">
+                Social Media
+            </a>
+            <a class="item" href="<?php echo $this->Url->build(["controller" => "contact","action" => "index"]);?>">
+                Contact
             </a>
         </div>
         

@@ -133,8 +133,24 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
             $user->username = $user->email;
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect([ 'action' => 'login']);
+                $pTable  = \Cake\ORM\TableRegistry::get("profile");
+                $profileObj = $pTable->newEntity();
+                $profileObj->user_id = $user->id;
+                $profileObj->detail = "Detail";
+                $profileObj->ratingAvg = 0;
+                $profileObj->city = $user->city;
+                $profileObj->country = $user->country;
+                $profileObj->address = "Address";
+                $profileObj->memberType = 1;
+                $profileObj->telephone = "(000) 123-1234";
+                $profileObj->mobile = "(000) 123-1234";
+                $profileObj->happyCustomerCount = 0;
+                $profileObj->lat = "0";
+                $profileObj->glong = '0';
+                if($pTable->save($profileObj)){
+                    $this->Flash->success(__('The user has been saved.'));
+                    return $this->redirect([ 'action' => 'login']);
+                }
             } else {
                 //$this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
@@ -194,7 +210,6 @@ class UsersController extends AppController
     
     public function isAuthorized($user)
     {
-        print_r($user);exit;
         // Admin can access every action
         if (isset($user['userType']) && $user['userType'] === 3) {
             return true;
