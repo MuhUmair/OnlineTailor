@@ -64,11 +64,14 @@ class AppController extends Controller
      */
     public function beforeRender(Event $event)
     {
+        $TailorBaseURL = "http://localhost/OnlineTailor/tailor/webroot";// localhost
+        //$TailorBaseURL = "http://planesolutions.net/PandoraDesign/Tailor/webroot";// PlaneSolutions.net
         if (!array_key_exists('_serialize', $this->viewVars) &&
             in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {
             $this->set('_serialize', true);
         }
+        $this->set("TailorBaseURL", $TailorBaseURL);
         $this->set('cUser', $this->Auth->user());
         $conTable = \Cake\ORM\TableRegistry::get("contact");
         $this->set('cContact', $conTable->find("all")->toArray());

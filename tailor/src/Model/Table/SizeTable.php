@@ -27,6 +27,11 @@ class SizeTable extends Table
         $this->table('size');
         $this->displayField('id');
         $this->primaryKey('id');
+        $this->belongsTo('Designtype', [
+            'foreignKey' => 'designID',
+            
+        ]);
+        
     }
 
     /**

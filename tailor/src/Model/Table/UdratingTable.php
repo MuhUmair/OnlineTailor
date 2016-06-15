@@ -55,6 +55,8 @@ class UdratingTable extends Table
             ->integer('rating')
             ->requirePresence('rating', 'create')
             ->notEmpty('rating');
+            
+        
 
         return $validator;
     }

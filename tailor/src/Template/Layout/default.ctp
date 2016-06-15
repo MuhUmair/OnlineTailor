@@ -68,7 +68,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                             <div class="menu transition hidden" tabindex="-1">
                                 <a class="item">Find a tailor</a>
                                 <a class="item">Find tailors</a>
-                                <a class="item">About Us</a>
+                                <!--<a class="item">About Us</a>-->
                             </div>
                         </div>
                         <a href="<?php echo $this->Url->build(["controller" => "home","action" => "index"]);?>">
@@ -77,9 +77,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         
                     </div>
                     
-                    <div class="ui dropdown item hidden-xs" tabindex="0">
-                        
-                        Find a tailor <i class="dropdown icon"></i>
+                    <div class="ui  item hidden-xs" tabindex="0">
+                        <a href="<?php echo $this->Url->build(["controller" => "profile","action" => "index"]);?>" style="color:black;" class="ui item hidden-xs">
+                        Find a tailor <!--<i class="dropdown icon"></i>-->
+                        </a>
                         <!--                        <div class="menu transition hidden" tabindex="-1">
                                                     <div class="header item">
                                                         <form class="ui form">
@@ -105,16 +106,24 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <div class="ui dropdown item hidden-xs" tabindex="0">
                         Find tailors <i class="dropdown icon"></i>
                         <div class="menu transition hidden" tabindex="-1">
-                            <a class="item" href="tailors.html">Tailors</a>
-                            <a class="item" href="tailor_designs.html">Designs</a>
-                            <a class="item" href="tailor_orders.html">Tailor Orders</a>
-                            <a class="item" href="tailor_profile.html">Tailor Profile</a>
-                            <a class="item" href="design_detail.html">Dress Detail</a>
+                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/1"]);?>">Mokawar</a>
+                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/2"]);?>">Printed</a>
+                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/3"]);?>">Model</a>
+                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/4"]);?>">Jalabeya</a>
+                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/5"]);?>">Moroccan Dresses</a>
+                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/6"]);?>">Dresses</a>
+                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/7"]);?>">Dantail</a>
+                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/8"]);?>">Other</a>
                         </div>
                     </div>
-                    <a class="ui item hidden-xs">
+                    <!--<a class="ui item hidden-xs">
                         About Us
+                    </a>-->
+                    <?php if(isset($cUser) ){?>
+                    <a href="<?php echo $this->Url->build(["controller" => "profile","action" => "view"]);?>" class="ui item hidden-xs">
+                        Profile
                     </a>
+                    <?php } ?>
                     <div class="right item visible-lg-flex hidden-xs">
                         <a class="ui ">
                             <?php echo $cContact[0]['contactNo']?>

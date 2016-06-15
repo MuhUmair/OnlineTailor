@@ -27,7 +27,21 @@ class DesignTable extends Table
         $this->table('design');
         $this->displayField('id');
         $this->primaryKey('id');
-        
+        $this->belongsTo('Designtype', [
+            'foreignKey' => 'id',
+            
+        ]);
+        $this->hasOne('Designimage', [
+            'foreignKey' => 'design_ID'
+            
+        ]);
+        $this->belongsTo('Users', [
+            'foreignKey' => false,
+            'queryBuilder' => function ($q) {
+                return $q->where(["User.id" => "Design.User_id"]); // Full conditions for filtering
+            }
+            
+        ]); 
     }
 
     public function findGetDesigns(Query $query){
@@ -111,6 +125,15 @@ class DesignTable extends Table
             ->requirePresence('price', 'create')
             ->notEmpty('price');
 
+        $validator
+            ->integer('ratingCount');
+            
+        $validator
+            ->integer('totalRating');
+        
+        $validator
+            ->integer('avrRating');
+        
         return $validator;
     }
 }

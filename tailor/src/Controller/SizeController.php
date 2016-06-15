@@ -18,7 +18,7 @@ class SizeController extends AppController
      */
     public function index()
     {
-        $size = $this->paginate($this->Size);
+        $size = $this->paginate($this->Size->find("all",["contain" => "Designtype"])->where(["Size.userID " => $this->Auth->user("id")]));
 
         $this->set(compact('size'));
         $this->set('_serialize', ['size']);
@@ -34,7 +34,7 @@ class SizeController extends AppController
     public function view($id = null)
     {
         $size = $this->Size->get($id, [
-            'contain' => []
+            'contain' => ["Designtype"]
         ]);
 
         $this->set('size', $size);
@@ -51,6 +51,8 @@ class SizeController extends AppController
         $size = $this->Size->newEntity();
         if ($this->request->is('post')) {
             $size = $this->Size->patchEntity($size, $this->request->data);
+            //$size->userID = $this->Auth->user("id");
+            //print_r($size);exit;
             if ($this->Size->save($size)) {
                 $this->Flash->success(__('The size has been saved.'));
                 return $this->redirect(['action' => 'index']);

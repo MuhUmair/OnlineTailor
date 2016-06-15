@@ -44,121 +44,11 @@
         </tr>
     </table>
 </div>
-<!--Top-->
-<div class="ui sidebar inverted vertical menu">
-            <a href="<?php echo $this->Url->build(["controller" => "profile","action" => "index"]);?>" class="item">
-                Profile
-            </a>
-            <a href="<?php echo $this->Url->build(["controller" => "design","action" => "index"]);?>"  class="item">
-                Design
-            </a>
-            <a href="<?php echo $this->Url->build(["controller" => "order","action" => "index"]);?>"  class="item">
-                Orders
-            </a>
-            <a class="item">
-                Pending Orders
-            </a>
-            <a class="item">
-                History
-            </a>
-            <a class="item">
-                Payments
-            </a>
-            <a class="item">
-                Other
-            </a>
-        </div>
-        
-        <div class="ui center aligned segment margin-header OTParallex" style="background-image: url(img/home/homeParallex.png);background-position: center;background-size: 100% 100%; background-repeat: no-repeat;" >
-            <div class="ui container grid">
-                <div class="sixteen wide column left aligned paddingR0 paddingB0">
-                    <div class="ui padded segment remove-border translatebg paddingB0" style="">
-                        <div class="container home-blue-handle paddingT0 paddingB0" style="margin-right: 2em">
-                            <div class="ui padded segment remove-border translatebg" >
-                                
-                                <div class="ui grid">
-                                    <div class="two column row">
-                                        <div class="left floated column">
-                                            <h1 class="ui header color-white">Tailor Profile</h1>
-                                        </div>
-                                        <div class="right floated column">
-                                            <div class="remove-circle ui tag labels">
-                                                <a class="remove-circle ui label floatR color-white label-blackBG-color" style="font-size: 14px;">
-                                                    Back to Home
-                                                </a>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-        <!--/Top-->
-        
-        <div class="ui center aligned segment OTParallex remove-border" style="margin: 0px">
-            <div class="ui container grid">
-                <div class="four wide computer column hidden-xs">
-                    <div class="ui padded segment sixteen wide column remove-border paddingT0 home-banner-btns translatebg " style="padding-top: 0px;">
-                        <div class="ui small item menu ">
-                            <!--<a class="item">
-                                <span class="text-color1 text">Mokawar</span>
-                            </a>-->
-                            <a href="<?php echo $this->Url->build(["controller" => "profile","action" => "index"]);?>" class="item">
-                                <span class="text">Profile</span>
-                            </a>
-
-                        </div>
-                        
-                        <div class="ui small item menu">
-                            <a href="<?php echo $this->Url->build(["controller" => "design","action" => "index"]);?>"  class="item">
-                                <span class="text-color1">Design</span>
-                            </a>
-                            
-                        </div>
-                        <div class="ui small item menu">
-                            <a href="<?php echo $this->Url->build(["controller" => "order","action" => "index"]);?>"  class="item">
-                                <span class="text-color1">Orders</span>
-                            </a>
-                            
-                        </div>
-                        <div class="ui small item menu">
-                            <a class="item">
-                                <span class="text-color1">Pending Orders</span>
-                            </a>
-                            
-                        </div>
-                        <div class="ui small item menu">
-                            <a class="item">
-                                <span class="text-color1">History</span>
-                            </a>
-                            
-                        </div>
-                        <div class="ui small item menu">
-                            <a class="item">
-                                <span class="text-color1">Payments</span>
-                            </a>
-                            
-                        </div>
-                        <div class="ui small item menu">
-                            <a class="item">
-                                <span class="text-color1">Other</span>
-                            </a>
-                            
-                        </div>
-                        
-                    </div>
-                </div>
-                
+<?php echo $this->element('sidebar-top'); ?>                
                 <div class="sixteen wide mobile  eleven wide tablet eleven wide computer column padding-xs-2em padding0" style="">
                     <div class="ui segment remove-border remove-border-radius paddingL0" style="margin-top: 1em; text-align: left;">
                         <i class="sidebar big icon OTSide-Menu visible-xs-inline-block" style='margin-top: -12px;color: black;'></i>
-                        <h1 class="ui left aligned header main-text-color" style="font-weight: normal;display: inline-block;margin-top: 0px;">Moroccan Dress Name</h1>
+                        <h1 class="ui left aligned header main-text-color" style="font-weight: normal;display: inline-block;margin-top: 0px;"><?= h($design->designName) ?></h1>
                         
                     </div>
                     <div class="ui segment remove-border-radius" style="padding: 0px">
@@ -166,21 +56,20 @@
                             <div class="ui container grid paddingL0">
                                 <div class="three column row">
                                     <div class="twelve wide mobile  twelve wide tablet twelve wide computer column paddingL0">
-                                        <?= $this->Html->image('parallex2.png',array('class' => 'ui left floated image', 'style' => 'width: 100%;', "id" => "main-img"));?>
-                                        
+                                        <?php if(isset($design->imgs->toList()[0]->img )){ ?>
+                                            <img src="<?php echo $TailorBaseURL . "/". $design->imgs->toList()[0]->img ?>" id="main-img" style="width: 100%;" class="ui left floated image" />
+                                            
+                                        <?php } else { ?>
+                                            <?= $this->Html->image('dark-gradient.png',array('class' => 'ui left floated image', 'style' => 'width: 100%;', "id" => "main-img"));?>
+                                        <?php } ?>
                                     </div>
-                                    <div class="two wide mobile  two wide tablet two wide computer column paddingL0 slider-img-container">
-                                        <?= $this->Html->image('home/homeParallex.png',array('class' => 'ui tiny left floated image', 'data-imgindex' => '1'));?>
-                                        <?= $this->Html->image('parallex2.png',array('class' => 'ui tiny left floated image', 'data-imgindex' => '2'));?>
-                                        <?= $this->Html->image('parallex3.png',array('class' => 'ui tiny left floated image', 'data-imgindex' => '3'));?>
-                                        <?= $this->Html->image('home/homeParallex.png',array('class' => 'ui tiny left floated image', 'data-imgindex' => '4'));?>
-                                    </div>
-                                    <div class="two wide mobile  two wide tablet two wide computer column paddingL0 slider-img-container">
-                                        <?= $this->Html->image('parallex2.png',array('class' => 'ui tiny left floated image', 'data-imgindex' => '5'));?>
-                                        <?= $this->Html->image('home/homeParallex.png',array('class' => 'ui tiny left floated image', 'data-imgindex' => '6'));?>
-                                        <?= $this->Html->image('parallex2.png',array('class' => 'ui tiny left floated image', 'data-imgindex' => '7'));?>
-                                        <?= $this->Html->image('parallex3.png',array('class' => 'ui tiny left floated image', 'data-imgindex' => '8'));?>
-
+                                    <div class="two wide mobile  two wide tablet four wide computer column paddingL0 slider-img-container" style="padding-right: 0;">
+                                        <?php 
+                                            $ind = 1; foreach($design->imgs as $img) { ?>
+                                            <img src="<?php echo $TailorBaseURL . "/". $img->img ?>" class="ui tiny left floated image" data-imgindex="<?php echo $ind ?>" />
+                                            
+                                        <?php $ind++; } ?>
+                                                
                                     </div>
                                 </div>
                                 
@@ -196,11 +85,11 @@
                             <div class="three column row">
                                 <div class="column">
                                     <i class="icon large user" aria-hidden="true" style="margin-top: -5px;"></i>
-                                    <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;">Designer name</h3>
+                                    <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;"><?php print_r( $design->user->fName ." ". $design->user->lName)?></h3>
                                 </div>
                                 <div class="column">
                                     <i class="icon large bookmark" aria-hidden="true" style="margin-top: -5px;"></i>
-                                    <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;">Moroccan Design</h3>
+                                    <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;"><?php echo $design->designtype->name?> Design</h3>
                                 </div>
                                 <div class="column">
                                     
@@ -238,39 +127,29 @@
                         </div>
                     </div>
                 </div>
-                
-            </div>
-        </div>
-        <div class="ui center aligned segment OTParallex remove-border" style="margin: 0px;">
-            <div class="ui center aligned centered grid container paddingTB3rem " style="">
-                <div class="ui centered grid">
-                    
-                    <div class="sixteen wide row">
-                        <h1 class="marginL12 ui center aligned header" style="margin-left: 0px !important;">
-                            Need help? Real people will answer your call right away.
-                        </h1>
-                    </div>
-                    <div class="sixteen wide row">
-                        <p>
-                            Call(877) 999-2681 or email support@mydomain.com
-                        </p>
-                    </div>
-                    <div class="sixteen wide row">
-                        <div class="ui padded segment remove-border paddingT0 translatebg" style="padding-left: 0px;">
-                            <button class="ui grey button remove-border-radius">LEARN MORE ABOUT MY TAILOR<span class="visible-lg-inline-block"></span></button>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
+                <?php echo $this->element('sidebar-bottom'); ?>
         <script type="text/javascript">
                 $(function(){
+                    var user_id = "<?php echo $design->user_id?>";
+                    var design_id = "<?php echo $design->id?>";
                     $('.rating')
-                            .rating({
-                                initialRating: 2,
-                        maxRating: 5
-                    });
+                        .rating({
+                            initialRating: "<?php echo $design->avrRating ?>",
+                            maxRating: 5
+                        }).rating(
+                            'setting', 
+                            'onRate', 
+                            function(value) {
+                                $.ajax({
+                                    method: "POST",
+                                    url: "<?php echo $this->Url->build(["controller" => "design","action" => "rated"]);?>",
+                                    data: { userID: user_id , designID: design_id , rating: value }
+                                })
+                                .done(function( msg ) {
+                                      //alert( "Data Saved: " + msg );
+                                });
+                            }
+                        );
                     
                 });
                 var imageIndex = 1;

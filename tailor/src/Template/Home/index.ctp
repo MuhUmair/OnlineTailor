@@ -11,20 +11,27 @@
                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, <span class="hidden-sm">when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span>
                                 </p>
                             </div>
-                            <form class="ui form">
+                            <form class="ui form" method="POST" action="<?php echo $this->Url->build(["controller" => "design","action" => "index"]);?>">
                                 <div class="ui grid">
+                                    <!--
+                                    <div class="eleven wide column " style="padding-left:2em;">
+                                        <h1 class="ui header color-white">Coming Soon</h1>
+                                        
+                                    </div>
+                                    -->
+                                    
+                                
                                     <div class="six wide column home-city-padding-handle ">
+                                        
                                         <div class="ui padded segment remove-border paddingT0 translatebg">
-                                            <select class="ui fluid dropdown remove-border-radius">
-                                                <option value="">City</option>
-                                                
-                                            </select>
+                                            <input type="text" class="remove-border-radius " name="design_city" placeholder="City">
+                                            
                                         </div>
                                     </div>
                                     <div class="six wide column home-design-name-padding-handle " style="">
                                         <div class="ui padded segment remove-border paddingT0 translatebg">
                                             <div class="field ">
-                                                <input type="text" class="remove-border-radius " name="design-name" placeholder="Design Name">
+                                                <input type="text" class="remove-border-radius " name="design_name" placeholder="Design Name">
                                             </div>
                                         </div>
                                     </div>
@@ -35,6 +42,7 @@
                                     </div>
                                     
                                 </div>
+                                
                             </form>
                         </div>
                     </div>
@@ -86,14 +94,15 @@
                                     <span class="text"><i class="dropdown icon"></i> Mokawar</span>
                                     <div class="menu">
                                         <div class="scrolling menu">
-                                            <div class="item">
+                                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/2"]);?>">
                                                 <div class="ui grey empty circular label"></div>
                                                 Printed
-                                            </div>
-                                            <div class="item">
+                                                
+                                            </a>
+                                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/3"]);?>">
                                                 <div class="ui grey empty circular label"></div>
                                                 Model
-                                            </div>
+                                            </a>
                                             
                                         </div>
                                     </div>
@@ -101,31 +110,31 @@
                             </div>
                             
                             <div class="ui small item menu">
-                                <a class="item">
+                                <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/4"]);?>">
                                     <span class="text-color1">Jalabeya</span>
                                 </a>
                                 
                             </div>
                             <div class="ui small item menu">
-                                <a class="item">
+                                <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/5"]);?>">
                                     <span class="text-color1">Moroccan Dresses</span>
                                 </a>
                                 
                             </div>
                             <div class="ui small item menu">
-                                <a class="item">
+                                <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/6"]);?>">
                                     <span class="text-color1">Dresses</span>
                                 </a>
                                 
                             </div>
                             <div class="ui small item menu">
-                                <a class="item">
+                                <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/7"]);?>">
                                     <span class="text-color1">Dantail</span>
                                 </a>
                                 
                             </div>
                             <div class="ui small item menu">
-                                <a class="item">
+                                <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/8"]);?>">
                                     <span class="text-color1">Any Other</span>
                                 </a>
                                 

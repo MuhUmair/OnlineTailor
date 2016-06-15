@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
 
 /**
@@ -23,7 +24,11 @@ class ProfileController extends AppController
      */
     public function index()
     {
-        $profile = $this->paginate($this->Profile);
+        $profile = $this->paginate($this->Profile->find("all",
+                [
+                    'contain' => ['users'],
+                    'conditions' => ['Profile.user_id <> '. $this->Auth->user("id")]
+                ]));
 
         $this->set(compact('profile'));
         $this->set('_serialize', ['profile']);
@@ -43,7 +48,7 @@ class ProfileController extends AppController
         if($id == null){
             $id = $this->Auth->user("id");
             $profile = $this->Profile->find("all", [
-                'conditions' => ["profile.user_id" => "$id"],
+                'conditions' => ["Profile.user_id" => "$id"],
                 'contain' => ['users']
             ])->first();
         }else {
@@ -51,6 +56,13 @@ class ProfileController extends AppController
                 'contain' => []
             ]);
 
+        }
+        
+        if($profile["avatar"] != null && $profile["avatar"] != "null" && $profile["avatar"] != ""){
+            $profile["avatar"] = $this->request->webroot . $profile["avatar"]; 
+        }else{
+            $profile["avatar"] = $this->request->webroot . "img/tailor.png"; 
+            
         }
         //print_r($profile);exit;
         $this->set('profile', $profile);
@@ -95,19 +107,60 @@ class ProfileController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
+    
+    public function rated(){
+        if ($this->request->is('post')) {
+            $udrating = TableRegistry::get('Udrating');
+            $udratingEnt = $udrating->newEntity();
+            $udratingEnt = $udrating->patchEntity($udratingEnt, $this->request->data);
+            //print_r($udratingEnt);exit;
+            $udratingEnt->designID = 0;
+            $udratingEnt1 = $udrating->find("all")->where("Udrating.profileID = ". $udratingEnt->profileID . " AND Udrating.userID = ". $udratingEnt->userID)->first();
+            $profile = $this->Profile->get($udratingEnt->profileID);
+            //print_r($design);exit;
+            if(isset($udratingEnt1->id)){
+                //print_r($udratingEnt1->id);exit;
+                $udratingEnt->id = $udratingEnt1->id;
+                $profile->totalRating = (int)$profile->totalRating - (int)$udratingEnt1->rating;
+                $profile->totalRating = (int)$profile->totalRating + (int)$udratingEnt->rating;
+            }else{
+                $profile->totalRating = (int)$profile->totalRating + (int)$udratingEnt->rating;
+                $profile->ratingCount = (int)$profile->ratingCount + 1;
+            }
+            $profile->avrRating = (int)$profile->totalRating / ((int)$profile->ratingCount * 5) * 5;
+            if ($udrating->save($udratingEnt)) {
+                $this->Profile->save($profile);
+                print_r("done");exit;
+                
+            } else {
+                print_r("fail");exit;
+                
+            }
+            
+        }
+    }
+    
     public function edit($id = null)
     {
         if($id == null){
             $id = $this->Auth->user("id");
         }
         $profile = $this->Profile->get($id, [
-            'contain' => []
+            'contain' => ["users"]
         ]);
+        //print_r($profile );exit;
         if ($this->request->is(['patch', 'post', 'put'])) {
+            //print_r(date("d_M_y_h_m_s"));exit;
+            if(isset($this->request->data["avatar"]) && isset($this->request->data["avatar"]["tmp_name"])){
+                $picPath = 'media/profile/' . date("d_M_y_h_m_s") . $this->request->data["avatar"]["name"];
+                move_uploaded_file($this->request->data["avatar"]["tmp_name"], WWW_ROOT . $picPath );
+                $this->request->data["avatar"] = $picPath ;
+            }
             $profile = $this->Profile->patchEntity($profile, $this->request->data);
             if ($this->Profile->save($profile)) {
                 $this->Flash->success(__('The profile has been saved.'));
                 return $this->redirect(['action' => 'index']);
+
             } else {
                 $this->Flash->error(__('The profile could not be saved. Please, try again.'));
             }
@@ -137,7 +190,7 @@ class ProfileController extends AppController
     public function isAuthorized($user)
     {
         // The owner of an article can edit and delete it
-        if (in_array($this->request->action, ['delete', 'add', 'index'])) {
+        if (in_array($this->request->action, ['delete', 'add'])) {
             return $this->redirect(['action' => 'view']);
         }
 
