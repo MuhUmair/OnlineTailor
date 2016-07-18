@@ -1,12 +1,6 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
-    </ul>
-</nav>
 <div class="user index large-9 medium-8 columns content">
-    <h3><?= __('User') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+    <h3><?= __('Tailors') ?></h3>
+    <table class="ui celled table" cellpadding="0" cellspacing="0">
         <thead>
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
@@ -14,11 +8,11 @@
                 <th><?= $this->Paginator->sort('lName') ?></th>
                 <th><?= $this->Paginator->sort('email') ?></th>
                 <th><?= $this->Paginator->sort('phone') ?></th>
-                <th><?= $this->Paginator->sort('password') ?></th>
+                
                 <th><?= $this->Paginator->sort('city') ?></th>
                 <th><?= $this->Paginator->sort('country') ?></th>
-                <th><?= $this->Paginator->sort('isNews') ?></th>
-                <th><?= $this->Paginator->sort('userType') ?></th>
+                <th><?= $this->Paginator->sort('mType',["label" => "Member Type"]) ?></th>
+                <th><?= $this->Paginator->sort('isActive',["label" => "Active"]) ?></th>
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -30,20 +24,49 @@
                 <td><?= h($user->lName) ?></td>
                 <td><?= h($user->email) ?></td>
                 <td><?= h($user->phone) ?></td>
-                <td><?= h($user->password) ?></td>
+                
                 <td><?= h($user->city) ?></td>
                 <td><?= h($user->country) ?></td>
-                <td><?= h($user->isNews) ?></td>
-                <td><?= $this->Number->format($user->userType) ?></td>
+                <td>
+                    <?php 
+                        $t = $user->mType;
+                        if($t == '1'){
+                            echo "1. Free";
+                        }else if($t == '2'){
+                            echo "2. Silver";
+                        }else if($t == '3'){
+                            echo "3. Gold";
+                        }
+                    ?>
+                </td>
+                <td><?php 
+                        $t = $user->isActive;
+                        if($t == '0'){
+                            echo "1. Not";
+                        }else if($t == '1'){
+                            echo "2. Activated";
+                        }
+                    ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
+                    <div class="ui breadcrumb">
+                        <?= $this->Html->link(__('Change Status'), ['action' => 'edit', $user->id]) ?>
+                    </div>
+                    
                 </td>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+<style>
+.pagination{
+        list-style: none;
+        padding: 0px;
+}
+.pagination li{
+        display: inline-block;
+}
+</style>
+
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->prev('< ' . __('previous')) ?>

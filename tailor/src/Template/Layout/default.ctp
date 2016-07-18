@@ -32,7 +32,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('css') ?>
     <?= $this->Html->script('jquery.min.js'); ?>
     <?= $this->Html->script('semantic.js'); ?>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaF2pKyYskArmvm3r5PAmeM1_sP0HksVo">
+        </script>
     </head>
+    
     <body>
         <style>
             .color-white{
@@ -56,7 +61,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             .bg-color3{
                 color: #ededeb !important;
             }
-            
+            .liked{
+                color: #f46522 !important;
+                font-weight: bold;
+            }
         </style>
         <!--header-->
         <header >
@@ -76,7 +84,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         </a>
                         
                     </div>
-                    
+                    <?php if(isset($cUser) && $cUser['userType'] != 1 ){ ?>
                     <div class="ui  item hidden-xs" tabindex="0">
                         <a href="<?php echo $this->Url->build(["controller" => "profile","action" => "index"]);?>" style="color:black;" class="ui item hidden-xs">
                         Find a tailor <!--<i class="dropdown icon"></i>-->
@@ -113,12 +121,13 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                             <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/5"]);?>">Moroccan Dresses</a>
                             <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/6"]);?>">Dresses</a>
                             <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/7"]);?>">Dantail</a>
-                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/8"]);?>">Other</a>
+                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/8"]);?>">Abaya</a>
                         </div>
                     </div>
                     <!--<a class="ui item hidden-xs">
                         About Us
                     </a>-->
+                    <?php } ?>
                     <?php if(isset($cUser) ){?>
                     <a href="<?php echo $this->Url->build(["controller" => "profile","action" => "view"]);?>" class="ui item hidden-xs">
                         Profile
@@ -129,23 +138,23 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                             <?php echo $cContact[0]['contactNo']?>
                         </a>
                         <?php if(isset($cUser)){ ?>
-                            <div class="ui item ">
-                                <a href="<?php echo $this->Url->build(["controller" => "users","action" => "logout"]);?>"><button class="ui basic button">Logout</button></a>
-                            </div>
+                        <div class="ui item ">
+                            <a href="<?php echo $this->Url->build(["controller" => "users","action" => "logout"]);?>"><button class="ui basic button">Logout</button></a>
+                        </div>
                         <?php } ?>
                         <?php if(!isset($cUser)){ ?>
-                            <a href="<?php echo $this->Url->build(["controller" => "users","action" => "login"]);?>" class="ui item">
-                                Login
-                            </a>
-
-                            <div class="ui item ">
-                                <a href="<?php echo $this->Url->build(["controller" => "users","action" => "signup"]);?>"><button class="ui basic button">Signup</button></a>
-                            </div>
+                        <a href="<?php echo $this->Url->build(["controller" => "users","action" => "login"]);?>" class="ui item">
+                            Login
+                        </a>
+                        
+                        <div class="ui item ">
+                            <a href="<?php echo $this->Url->build(["controller" => "users","action" => "signup"]);?>"><button class="ui basic button">Signup</button></a>
+                        </div>
                         <?php } ?>
                         <?php if(isset($cUser) && $cUser['userType'] == 3 ){?>
-                            <a href="<?php echo $this->Url->build(["controller" => "peoplesaying","action" => "index"]);?>" class="ui ">
-                                Admin
-                            </a>
+                        <a href="<?php echo $this->Url->build(["controller" => "Users","action" => "index"]);?>" class="ui ">
+                            Admin
+                        </a>
                         <?php } ?>
                         
                     </div>
@@ -309,6 +318,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             </div>
         </footer>
         <script type="text/javascript">
+            
+                
             $(function(){
                 $('.ui.dropdown').dropdown();
                 $(".OTSlider >i:nth-child(2)").click(function(){

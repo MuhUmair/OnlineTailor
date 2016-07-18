@@ -1,3 +1,9 @@
+<style>
+       #map {
+        width: 100%;
+        height: 400px;
+      }
+    </style>
 <nav class="large-3 medium-4 columns" id="actions-sidebar" style="display:none;">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
@@ -74,10 +80,10 @@
                                 </div>
                                 
                             </div>
-                            
                             <h2 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;"><?= h($design->designName) ?></h2>
                             <h3 class="ui header main-text-color" style="display: inline-block;font-weight: normal;margin-top: 0px;margin-left: 20px;">AED <?= $this->Number->format($design->price) ?></h3>
-                            <div class="ui large star rating" style="margin-left: 20px;"></div>
+                            <!--<div class="ui large star rating" style="margin-left: 20px;"></div>--!>
+                            <h3 class="likeBtn" style="margin-top: 8px;display:inline;float:right;">Like <i class="thumbs outline up icon" style="margin-left: 5px;"></i></h3>
                             <p><?= h($design->description) ?></p>
                             
                         </div>
@@ -85,7 +91,9 @@
                             <div class="three column row">
                                 <div class="column">
                                     <i class="icon large user" aria-hidden="true" style="margin-top: -5px;"></i>
-                                    <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;"><?php print_r( $design->user->fName ." ". $design->user->lName)?></h3>
+                                    <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;">
+                                        <?= $this->Html->link(__($design->user->fName ." ". $design->user->lName), ['controller' => 'profile', 'action' => 'view', $design->profile->id]) ?> 
+                                    </h3>
                                 </div>
                                 <div class="column">
                                     <i class="icon large bookmark" aria-hidden="true" style="margin-top: -5px;"></i>
@@ -125,13 +133,30 @@
                                 </div>
                             
                         </div>
+                        <div id="map"></div>
                     </div>
                 </div>
                 <?php echo $this->element('sidebar-bottom'); ?>
         <script type="text/javascript">
+                var gLat = 0;
+                var gLong = 0;
+                function initMaps() {
+                    var mapDiv = document.getElementById('map');
+                    var map = new google.maps.Map(mapDiv, {
+                        center: {lat: gLat , lng: gLong},
+                        zoom: 14
+                    });
+                }  
                 $(function(){
+                    s();
+                    
                     var user_id = "<?php echo $design->user_id?>";
                     var design_id = "<?php echo $design->id?>";
+                    $(".likeBtn").on("click", function(){
+                        $(this).toggleClass("liked");//css("cssText", "color: #f46522 !important;");
+                        
+                    });
+                    
                     $('.rating')
                         .rating({
                             initialRating: "<?php echo $design->avrRating ?>",
@@ -152,6 +177,19 @@
                         );
                     
                 });
+                function s(){
+                    var addressM = $.get("https://maps.googleapis.com/maps/api/geocode/json?address=<?php echo $design->profile->city  ?>+<?php echo $design->profile->country  ?>" ,
+                        function(){
+                            console.log(addressM["responseJSON"]["results"][0]["geometry"]["location"]);
+                            gLat = addressM["responseJSON"]["results"][0]["geometry"]["location"]["lat"];
+                            gLong = addressM["responseJSON"]["results"][0]["geometry"]["location"]["lng"];
+                            
+                            initMaps();
+                        }
+                    );
+                    
+                    
+                }
                 var imageIndex = 1;
                 $(document).ready(function() {
                     $(".slider-img-container img").hover(function(){

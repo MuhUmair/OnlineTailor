@@ -64,8 +64,8 @@ class AppController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        $TailorBaseURL = "http://localhost/OnlineTailor/tailor/webroot";// localhost
-        //$TailorBaseURL = "http://planesolutions.net/PandoraDesign/Tailor/webroot";// PlaneSolutions.net
+        //$TailorBaseURL = "http://localhost/OnlineTailor/tailor/webroot";// localhost
+        $TailorBaseURL = "http://planesolutions.net/PandoraDesign/Tailor/webroot";// PlaneSolutions.net
         if (!array_key_exists('_serialize', $this->viewVars) &&
             in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {

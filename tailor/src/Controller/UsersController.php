@@ -34,10 +34,18 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             
             $user = $this->Auth->identify();
-            
+            //print_r($user);exit;
             if ($user) {
-                $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
+                if($user["isActive"] == 1)
+                {
+                    $this->Auth->setUser($user);
+                    return $this->redirect($this->Auth->redirectUrl());
+                }else{
+                    $user = $this->Users->newEntity();
+                    $this->Flash->error(__('Profile not acticvated. Please contact admin'), [
+                        
+                    ]);
+                }
             } else {
                 $this->Flash->error(__('Username or password is incorrect'), [
                     'key' => 'auth'
@@ -54,7 +62,10 @@ class UsersController extends AppController
      */
     public function index()
     {
-        //$user = $this->paginate($this->User);
+        //print_r($user);exit;
+        $user = $this->paginate($this->Users->find("all")->where(["userType" => "1"]));
+        $this->viewBuilder()->layout('admin_layout');
+                //print_r($user);exit;
 //        $result = $this->User->find("getUsers");
 //        foreach ($result as $show){
 //           print_r($show);
@@ -70,16 +81,16 @@ class UsersController extends AppController
 //        foreach ($result as $show){
 //            print_r($show);
 //        }
-        $result = $this->Users->find("getByTypeID",["userType" => 1]);
+        //$result = $this->Users->find("getByTypeID",["userType" => 1]);
             //print_r($result->first());
-            foreach ($result as $show){
-                print_r($show);
-            }
+            //foreach ($result as $show){
+            //    print_r($show);
+            //}
         
         
          
 //         }
-        exit;
+        //exit;
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
@@ -129,30 +140,39 @@ class UsersController extends AppController
             if(isset($this->request->data["isNews"]) && $this->request->data["isNews"] == 'on'){
                 $this->request->data["isNews"] = 1;
             }
-            //print_r($this->request->data["isNews"]);exit;
-            $user = $this->Users->patchEntity($user, $this->request->data);
-            $user->username = $user->email;
-            if ($this->Users->save($user)) {
-                $pTable  = \Cake\ORM\TableRegistry::get("profile");
-                $profileObj = $pTable->newEntity();
-                $profileObj->user_id = $user->id;
-                $profileObj->detail = "Detail";
-                $profileObj->ratingAvg = 0;
-                $profileObj->city = $user->city;
-                $profileObj->country = $user->country;
-                $profileObj->address = "Address";
-                $profileObj->memberType = 1;
-                $profileObj->telephone = "(000) 123-1234";
-                $profileObj->mobile = "(000) 123-1234";
-                $profileObj->happyCustomerCount = 0;
-                $profileObj->lat = "0";
-                $profileObj->glong = '0';
-                if($pTable->save($profileObj)){
-                    $this->Flash->success(__('The user has been saved.'));
-                    return $this->redirect([ 'action' => 'login']);
+            //print_r($this->request->data);exit;
+            if($this->request->data["g-recaptcha-response"] != ''){
+                $user = $this->Users->patchEntity($user, $this->request->data);
+                $user->username = $user->email;
+                if($user->userType == 2){
+                    $user->isActive = 1;
+                    $msg = "Dear Customer welcome to Online Tailor";
+                }else{
+                    $msg = "Dear Tailor welcome to Online Tailor. Your account will be activated with in 24 hours.";
+                }
+                if ($this->Users->save($user)) {
+                    $pTable  = \Cake\ORM\TableRegistry::get("profile");
+                    $profileObj = $pTable->newEntity();
+                    $profileObj->user_id = $user->id;
+                    $profileObj->detail = "Detail";
+                    $profileObj->ratingAvg = 0;
+                    $profileObj->city = $user->city;
+                    $profileObj->country = $user->country;
+                    $profileObj->address = "Address";
+                    $profileObj->memberType = 1;
+                    $profileObj->telephone = "(000) 123-1234";
+                    $profileObj->mobile = "(000) 123-1234";
+                    $profileObj->happyCustomerCount = 0;
+                    $profileObj->lat = "0";
+                    $profileObj->glong = '0';
+                    if($pTable->save($profileObj)){
+                        mail($user->email,"Welcome to Online Tailor",$msg);
+                        $this->Flash->success(__('Please check your inbox'));
+                        return $this->redirect([ 'action' => 'login']);
+                    }
                 }
             } else {
-                //$this->Flash->error(__('The user could not be saved. Please, try again.'));
+                $this->Flash->error(__('Are you robot?'));
             }
         }
         $this->set(compact('user'));
@@ -171,6 +191,7 @@ class UsersController extends AppController
         $user = $this->Users->get($id, [
             'contain' => []
         ]);
+        $this->viewBuilder()->layout('admin_layout');
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
@@ -184,6 +205,7 @@ class UsersController extends AppController
         $this->set('_serialize', ['user']);
     }
 
+    
     /**
      * Delete method
      *

@@ -43,8 +43,12 @@
                                         </div>
                                         <div class="right floated column">
                                             <div class="remove-circle ui tag labels">
-                                                <?= $this->Html->link(__('Back to Home'), ['action' => 'index'],["class" => "remove-circle ui label floatR color-white label-blackBG-color", "style" => "font-size: 14px;"]) ?>
-                                                
+                                                <?php if($this->request->params['action'] != 'index'){ ?>
+                                                    <?= $this->Html->link(__('Back to '. $this->request->params['controller'].'s'), ['action' => 'index'],["class" => "remove-circle ui label floatR color-white label-blackBG-color", "style" => "font-size: 14px;"]) ?>
+                                                <?php }else{ ?>
+                                                    <?= $this->Html->link(__('Back to Home'), ['controller' => 'home', 'action' => 'index'],["class" => "remove-circle ui label floatR color-white label-blackBG-color", "style" => "font-size: 14px;"]) ?>
+                                                <?php } ?>
+                                                <?php //print_r( $this->request->params) ?>
                                             </div>
                                             
                                         </div>
@@ -75,12 +79,17 @@
                         </div>
                         
                         <div class="ui small item menu">
-                            <a href="<?php echo $this->Url->build(["controller" => "design","action" => "index"]);?>"  class="item">
-                                <span class="text-color1">Design</span>
-                            </a>
-                            
+                            <?php if(isset($cUser) && $cUser['userType'] == 1 ){ ?>
+                                <a href="<?php echo $this->Url->build(["controller" => "design","action" => "tailorview", $cUser['id']]);?>"  class="item">
+                                    <span class="text-color1">Design</span>
+                                </a>
+                            <?php }else{ ?>
+                                <a href="<?php echo $this->Url->build(["controller" => "design","action" => "index" ]);?>"  class="item">
+                                    <span class="text-color1">Design</span>
+                                </a>
+                            <?php } ?>
                         </div>
-                        <?php if(isset($cUser) && $cUser['userType'] == 1 ){ ?>
+                        <?php if(isset($cUser) && $cUser['userType'] == 2 ){ ?>
                             <div class="ui small item menu">
                                 <a href="<?php echo $this->Url->build(["controller" => "size","action" => "index"]);?>"  class="item">
                                     <span class="text-color1">Size</span>

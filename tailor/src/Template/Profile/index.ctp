@@ -77,7 +77,17 @@
                                     </div>
                                     <div class="column">
                                         <i class="icon large bookmark" aria-hidden="true" style="margin-top: -5px;"></i>
-                                        <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;">Golden Member</h3>
+                                        <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;">
+                                        <?php 
+                                            if($profile->user->mType == 1){
+                                                echo "Free";
+                                            }else if($profile->user->mType == 2){
+                                                echo "Silver";
+                                            }else if($profile->user->mType == 3){
+                                                echo "Gold";
+                                            }
+                                        ?> 
+                                        Member</h3>
                                     </div>
                                     
                                 </div>

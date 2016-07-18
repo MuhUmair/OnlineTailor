@@ -37,24 +37,6 @@ class UsersTable extends Table
         ]);
         
     }
-    public function findGetUsers(Query $query){
-        return $q = $query->select([                
-            ])->contain(["Profile"]);
-    }
-    
-    public function findGetUserByID(Query $query, $options){
-        return $q = $query->select([                
-            ])->where(["user.id" => $options['user_id']])
-            ->contain(["Profile"]);
-    }
-    public function findGetByTypeID(Query $query, $options){
-       return $q = $query->select([                
-            ])->where(["user.id" => $options['userType']])
-            ->contain(["Profile"]);
-    }
-    
-    
-    
 
      /**
      * Default validation rules.

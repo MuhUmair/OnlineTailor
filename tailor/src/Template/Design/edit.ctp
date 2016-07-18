@@ -18,27 +18,23 @@
                         <fieldset style="border:none;">
                             <?php
                                 echo $this->Form->hidden('tailorID',["value" => $cUser['id']]);
-                                echo $this->Form->input('designName');
+                                echo "<label>Design Name</label>";
+                                echo $this->Form->input('designTypeID',['label' => false, "class" => "dType",
+                                    'options' => [  '1' => 'Mokawar', 
+                                                    '2' => 'Printed', 
+                                                    '3' => 'Model', 
+                                                    '4' => 'Jalabeya',
+                                                    '5' => 'Moroccan Dresses',
+                                                    '6' => 'Dresses',
+                                                    '7' => 'Dantail',
+                                                    '8' => 'Abaya',
+                                                 ]
+                                ]);
+                                echo $this->Form->input('designName', ["type" => "hidden", "class" => "dName"]);
                                 echo "<br />";
                                 echo $this->Form->input('description');
                                 echo "<br />";
                                 echo $this->Form->input('fabricName');
-                                echo "<br />";
-                                echo $this->Form->input('designTypeID', [
-                                    'options' => [
-                                        '1' => 'Mokawar', 
-                                        '2' => 'Printed', 
-                                        '3' => 'Model',
-                                        '4' => 'Jalabeya',
-                                        '5' => 'Moroccan',
-                                        '6' => 'Dresses',
-                                        '7' => 'Dantail',
-                                        '8' => 'Other'
-                                        
-                                    ],
-                                    'label' => "Design" 
-                                ]);
-                                                
                                 echo "<br />";
                                 echo $this->Form->input('status');
                                 echo "<br />";
@@ -85,6 +81,10 @@
             $(function(){
                 $(".addImg").on("click", function(){
                     $("#imgCon").append('<br /><div class="input file"><input type="file" name="imgs[]" id="imgs"></div>');
+                });
+                $(".dType").on("change", function(){
+                    $(".dName").val($(".dType option:selected").text());
+                    
                 });
             });
         </script>

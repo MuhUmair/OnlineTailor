@@ -66,14 +66,22 @@
                                 echo $this->Form->input('country');
                             ?>
                         </fieldset>
+                        <?php $pId = $profile->id ;?>
+                        
                         <div class="ui tag labels rigth-arrow remove-circle " style="display:inline-block;">
                         <?= $this->Form->button(__('Submit'), ["class" => "ui label product-detail-label label-blue-blackBG-color color-white"]) ?>
                         </div>
+                        <?= $this->Html->link(
+                                __('Change Password'),
+                                ['action' => 'changepassword', $pId],
+                                ["style" => "float:right;", "class" => "ui primary button label-blue-blackBG-color color-white"]
+                            )
+                        ?>
                         
                         <?= $this->Form->end() ?>
                         <?= $this->Html->link(
                                 __('back'),
-                                ['action' => 'view', $profile->id],
+                                ['action' => 'view', $pId],
                                 ["style" => "float:right;", "class" => "ui primary button label-blue-blackBG-color color-white"]
                             )
                         ?>

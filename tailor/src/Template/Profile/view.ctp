@@ -84,19 +84,23 @@
                         </div>
                         <div class="ui container grid left aligned segment remove-border">
                             <div class="three column row">
+                                <?php if($profile->user->userType == "1" ){ ?>
                                 <div class="column">
                                     <h3 class="ui header" style="display: inline-block;font-weight: normal;">Tailor Rating</h3>
                                     <div class="ui large star rating" data-rating="<?php echo $profile->avrRating?>" data-max-rating="5" data-pid="<?php echo $profile->id ?>"></div>
                                     
                                 </div>
+                                <?php } ?>
                                 <div class="column">
                                     <i class="icon large marker" aria-hidden="true" style="margin-top: -5px;"></i>
                                     <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;"><?= h($profile->city . ", " . $profile->country)?></h3>
                                 </div>
                                 <div class="column">
+                                    <i class="icon large cut" aria-hidden="true" style="margin-top: -5px;"></i>
+                                    <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;">
+                                        <?= $this->Html->link(__(Designs), ['controller' => 'design', 'action' => 'tailorview', $profile["user_id"]]) ?> 
                                     
-                                    <i class="icon large add user " aria-hidden="true" style="margin-top: -5px;"></i>
-                                    <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;">Golden Member</h3>
+                                    </h3>
                                 </div>
                             </div>
                             <div class="three column row">
@@ -111,7 +115,7 @@
                                 <div class="column">
                                     
                                     <i class="icon large male" aria-hidden="true" style="margin-top: -5px;"></i>
-                                    <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;"><?= h($profile->happyCustomerCount)?> Happy users</h3>
+                                    <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;"><?= h($profile->happyCustomerCount)?> Happy customers</h3>
                                 </div>
                             </div>
                         </div>

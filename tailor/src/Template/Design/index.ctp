@@ -43,7 +43,7 @@
         <p><?= $this->Paginator->counter() ?></p>
     </div>
 </div>
-<?php echo $this->element('sidebar-top'); ?>                
+<?php echo $this->element('sidebar-design'); ?>                
                 <div class="sixteen wide mobile  eleven wide tablet eleven wide computer column padding-xs-2em paddingL0 paddingR0 paddingT0" style="">
                     <div class="ui segment remove-border remove-border-radius paddingL0" style="margin-top: 1em; text-align: left;">
                         <i class="sidebar big icon OTSide-Menu visible-xs-inline-block" style='margin-top: -12px;color: black;'></i>
@@ -78,8 +78,9 @@
                                             <a class="item label-orange-blackBG-color color-white">
                                                 AED <?= $this->Number->format($design->price) ?>
                                             </a>
-                                            <a class="item label-blackBG-color color-white">
-                                                <div class="ui large star rating" data-rating="<?php echo $design->avrRating?>" data-max-rating="5" data-did="<?php echo $design->id ?>"></div>
+                                            <a class="item label-blackBG-color color-white likeBtn" style="">
+                                                <!--<div class="ui large star rating" data-rating="<?php echo $design->avrRating?>" data-max-rating="5" data-did="<?php echo $design->id ?>"></div>--!>
+                                                Like <i class="thumbs outline up icon" style="margin-left: 5px;"></i>
                                             </a>
                                             <div class="ui tag labels rigth-arrow remove-circle ">
                                                 <?= $this->Html->link( __('View Detail'), ['action' => 'view', $design->id],[ "class"=> "ui label product-detail-label label-blue-blackBG-color color-white"]) ?>
@@ -98,6 +99,10 @@
         <script type="text/javascript">
                 $(function(){
                     var user_id = "<?php echo $cUser['id']?>";
+                    $(".likeBtn").on("click", function(){
+                        $(this).toggleClass("liked");//css("cssText", "color: #f46522 !important;");
+                        
+                    });
                     $('.rating')
                             .rating({
                                 initialRating: 2,

@@ -10,10 +10,28 @@ and open the template in the editor.
 /* cakephp*/
 .message.success{
     position: absolute;
-    top: 90px;
-    z-index: 9999;
-    left: 120px;
+    float: right;
+    text-align: center;
+    width: 100%;
+    top: 235px;
+    z-index: 99;
     color: green;
+}
+.message.error{
+   top: 90px;
+    position: absolute;
+    z-index: 99;
+    width: 100%;
+    text-align: center;    
+    font-weight: bold;
+    color: red;
+}
+.container {
+    .message.success,
+    .message.error{
+        top: 60px !important;
+        text-align: left !important;
+    }
 }
 .margin-header{
     margin-top: 69px !important;
@@ -392,4 +410,16 @@ and open the template in the editor.
     .marginL0-lg{
         margin-left: 0px!important;
     }
+}
+.error-message{
+    font-weight: bolder !important;
+    color: red  !important;
+}
+.ui.celled.table tr th:first-child, .ui.celled.table tr td:first-child{
+    width: 150px !important;
+    padding-left: 20px !important;
+}
+.liked{
+    color: #f46522 !important;
+    font-weight: bold;
 }

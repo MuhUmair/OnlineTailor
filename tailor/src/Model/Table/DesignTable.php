@@ -41,7 +41,14 @@ class DesignTable extends Table
                 return $q->where(["User.id" => "Design.User_id"]); // Full conditions for filtering
             }
             
-        ]); 
+        ]);
+        $this->belongsTo('Profile', [
+            'foreignKey' => false,
+            'queryBuilder' => function ($q) {
+                return $q->where(["Profile.User_id" => "Design.User_id"]); // Full conditions for filtering
+            }
+            
+        ]);
     }
 
     public function findGetDesigns(Query $query){

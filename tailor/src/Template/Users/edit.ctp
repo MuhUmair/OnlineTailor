@@ -1,31 +1,23 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $user->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List User'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('List Tailor'), ['action' => 'index']) ?></li>
     </ul>
 </nav>
 <div class="user form large-9 medium-8 columns content">
-    <?= $this->Form->create($user) ?>
+    <?= $this->Form->create($user, ["class" => "ui form"]) ?>
     <fieldset>
-        <legend><?= __('Edit User') ?></legend>
+        <label>Member type</label>
         <?php
-            echo $this->Form->input('fName');
-            echo $this->Form->input('lName');
-            echo $this->Form->input('email');
-            echo $this->Form->input('phone');
-            echo $this->Form->input('password');
-            echo $this->Form->input('city');
-            echo $this->Form->input('country');
-            echo $this->Form->input('isNews');
-            echo $this->Form->input('userType');
+            echo $this->Form->input('mType', [
+                'options' => [ '1' => 'Free', '2' => 'Silver', '3' => 'Gold'],'label' => false 
+            ]);
+            echo "<label>Is Active</label>";
+            echo $this->Form->input('isActive', [
+                'options' => [ '0' => 'Not', '1' => 'Activate'],'label' => false 
+            ]);
+            //echo $this->Form->input('mType');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Submit'),["class" => "ui primary button"]) ?>
     <?= $this->Form->end() ?>
 </div>

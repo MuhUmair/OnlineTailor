@@ -27,7 +27,7 @@ class ProfileController extends AppController
         $profile = $this->paginate($this->Profile->find("all",
                 [
                     'contain' => ['users'],
-                    'conditions' => ['Profile.user_id <> '. $this->Auth->user("id")]
+                    'conditions' => ['Profile.user_id <> '. $this->Auth->user("id") ." AND users.userType = 1"]
                 ]));
 
         $this->set(compact('profile'));
@@ -53,7 +53,7 @@ class ProfileController extends AppController
             ])->first();
         }else {
             $profile = $this->Profile->get($id, [
-                'contain' => []
+                'contain' => ['users']
             ]);
 
         }
@@ -169,6 +169,34 @@ class ProfileController extends AppController
         $this->set('_serialize', ['profile']);
     }
 
+    public function changepassword($id = null)
+    {
+        if($id == null){
+            $id = $this->Auth->user("id");
+        }
+        $profile = $this->Profile->get($id, [
+            'contain' => ["users"]
+        ]);
+        //print_r($profile );exit;
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            //print_r(date("d_M_y_h_m_s"));exit;
+            if(isset($this->request->data["avatar"]) && isset($this->request->data["avatar"]["tmp_name"])){
+                $picPath = 'media/profile/' . date("d_M_y_h_m_s") . $this->request->data["avatar"]["name"];
+                move_uploaded_file($this->request->data["avatar"]["tmp_name"], WWW_ROOT . $picPath );
+                $this->request->data["avatar"] = $picPath ;
+            }
+            $profile = $this->Profile->patchEntity($profile, $this->request->data);
+            if ($this->Profile->save($profile)) {
+                $this->Flash->success(__('The profile has been saved.'));
+                return $this->redirect(['action' => 'index']);
+
+            } else {
+                $this->Flash->error(__('The profile could not be saved. Please, try again.'));
+            }
+        }
+        $this->set(compact('profile'));
+        $this->set('_serialize', ['profile']);
+    }
     /**
      * Delete method
      *

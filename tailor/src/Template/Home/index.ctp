@@ -20,7 +20,7 @@
                                     </div>
                                     -->
                                     
-                                
+                                    <?php if(isset($cUser) && $cUser['userType'] != 1 ){ ?>
                                     <div class="six wide column home-city-padding-handle ">
                                         
                                         <div class="ui padded segment remove-border paddingT0 translatebg">
@@ -40,7 +40,7 @@
                                             <button class="ui grey button remove-border-radius hvr-rotate">Find <span class="visible-lg-inline-block">Now</span></button>
                                         </div>
                                     </div>
-                                    
+                                    <?php } ?>
                                 </div>
                                 
                             </form>
@@ -82,7 +82,7 @@
                         </form>
                     </div>
                 </div>
-                
+                <?php if(isset($cUser) && $cUser['userType'] != 1 ){ ?>
                 <div class="five wide column hidden-xs">
                     <div class="ui padded segment grid remove-border translatebg paddingL0">
                         <div class="ui padded segment sixteen wide column remove-border paddingT0 floatR home-banner-btns translatebg " style="padding-top: 0px;">
@@ -135,7 +135,7 @@
                             </div>
                             <div class="ui small item menu">
                                 <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/8"]);?>">
-                                    <span class="text-color1">Any Other</span>
+                                    <span class="text-color1">Abaya</span>
                                 </a>
                                 
                             </div>
@@ -143,6 +143,7 @@
                         </div>
                     </div>
                 </div>
+                <?php } ?>
             </div>
         </div>
         <!--/Top-->

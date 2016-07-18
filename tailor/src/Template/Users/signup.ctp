@@ -41,14 +41,14 @@
                                     </div>
                                     <div class="sixteen wide mobile six wide computer column ">
                                         <div class="ui padded segment remove-border paddingT0 translatebg">
-                                            <?php echo $this->Form->input('password', array( 'label' => false , 'class' => 'remove-border-radius', 'placeholder' => 'Password'));?>
+                                            <?php echo $this->Form->input('password', array( 'label' => false , 'class' => 'remove-border-radius mPassword', 'placeholder' => 'Password'));?>
                                             
                                         </div>
                                     </div>
                                     <div class="sixteen wide mobile six wide computer column " style="">
                                         <div class="ui padded segment remove-border paddingT0 translatebg">
                                             <div class="field">
-                                                <?php echo $this->Form->input('conpassword', array( 'label' => false , 'class' => 'remove-border-radius', 'placeholder' => 'Confirm Password'));?>
+                                                <?php echo $this->Form->input('conpassword', array( 'label' => false , 'class' => 'remove-border-radius cPassword', 'placeholder' => 'Confirm Password', 'type' => 'password'));?>
                                                 
                                             </div>
                                         </div>
@@ -71,7 +71,7 @@
                                         <div class="ui padded segment remove-border paddingT0 translatebg">
                                             <div class="field">
                                                 <?php echo $this->Form->input('userType', [
-                                                        'options' => ['1' => 'Tailor', '2' => 'Customer'],'label' => false 
+                                                        'options' => [ '2' => 'Customer', '1' => 'Tailor'],'label' => false 
                                                     ]);?>
                                                 
                                             </div>
@@ -92,12 +92,13 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
                                     <div class="six wide column">
                                         <div class="ui padded segment remove-border paddingT0 translatebg" style="">
-                                            <button class="ui grey button remove-border-radius">Sign up <span class="visible-lg-inline-block">Now</span></button>
+                                            <button class="ui grey button remove-border-radius signupBtn">Sign up <span class="visible-lg-inline-block">Now</span></button>
                                         </div>
                                     </div>
+                                    <div class="g-recaptcha" data-sitekey="6LfoxiQTAAAAALABZJ7D2PBKsYItBalnrlQ81wJO"></div>
                                     
                                 </div>
                             <?= $this->Form->end() ?>
@@ -108,4 +109,19 @@
             </div>
         </div>
         <!--/Top-->
-        
+        <script>
+            $(function(){
+                var mPass = $(".mPassword");
+                var cPass = $(".cPassword");
+                $(".cPassword, .mPassword").on("keydown keyup", function(){
+                    if(mPass.val() != "" && mPass.val().length > 5 && mPass.val() == cPass.val()){
+                        cPass.css({'border-color' : 'green'});    
+                        mPass.css({'border-color' : 'green'});
+                    }else{
+                        cPass.css({'border-color' : 'red'});    
+                        mPass.css({'border-color' : 'red'});
+                    }
+                });
+                 
+            });
+        </script>

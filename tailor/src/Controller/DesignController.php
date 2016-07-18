@@ -21,6 +21,7 @@ class DesignController extends AppController
     public function index($dID = null)
     {
         $designs = "";
+        //print_r($dID);exit;
         if($this->request->is('post')){
             $dc = $this->request->data["design_city"];
             $dn = $this->request->data["design_name"];
@@ -56,12 +57,25 @@ class DesignController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
+    public function tailorview($id = null){
+        $designs = "";
+        if($id != null){
+            $designs = $this->paginate($this->Design->find("all")->contain("Designimage")->distinct(["Design.id"])
+                        ->where(["User_id" => $id]));
+            
+        }else{
+            return $this->redirect([ 'action' => 'index']);
+        }
+        $this->set(compact('designs'));
+            $this->set('_serialize', ['designs']);
+            $this->set('mDesigns', $designs);
+    }
     public function view($id = null)
     {
         $designimage = TableRegistry::get('Designimage');
         
         $design = $this->Design->get($id, [
-            'contain' => ["Designtype", "Users"]
+            'contain' => ["Designtype", "Users", "Profile"]
             
         ]);
         
@@ -113,8 +127,11 @@ class DesignController extends AppController
         $design = $this->Design->newEntity();
         if ($this->request->is('post')) {
             $design = $this->Design->patchEntity($design, $this->request->data);
+            $design->user_id = $design->tailorID;
+            $design->designType_ID = $design->designTypeID;
             if ($this->Design->save($design)) {
-                if(isset($this->request->data["imgs"]) && isset($this->request->data["imgs"][0]["tmp_name"])){
+                //print_r($design);exit;
+                if(isset($this->request->data["imgs"]) && isset($this->request->data["imgs"][0]["tmp_name"]) && $this->request->data["imgs"][0]["tmp_name"] != ''){
                     foreach($this->request->data["imgs"] as $img){
                         $picPath = 'media/design/' . date("d_M_y_h_m_s") . $img["name"];
                         move_uploaded_file($img["tmp_name"], WWW_ROOT . $picPath );
@@ -129,7 +146,7 @@ class DesignController extends AppController
 
 
                 $this->Flash->success(__('The design has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'tailorview',$design->user_id]);
             } else {
                 $this->Flash->error(__('The design could not be saved. Please, try again.'));
             }
@@ -152,11 +169,17 @@ class DesignController extends AppController
         $design = $this->Design->get($id, [
             'contain' => []
         ]);
+        $design->tailorID = $design->user_id ;
+        $design->designTypeID = $design->designType_ID ;
+            
         $design->imgs = $designimage->find("all")->where(["design_ID" => $id]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             //print_r($this->request->data);exit;
             $design = $this->Design->patchEntity($design, $this->request->data);
-            if(isset($this->request->data["imgs"]) && isset($this->request->data["imgs"][0]["tmp_name"])){
+            $design->user_id = $this->request->data["tailorID"];
+            $design->designType_ID = $this->request->data["designTypeID"];
+            if(isset($this->request->data["imgs"]) && isset($this->request->data["imgs"][0]["tmp_name"]) && $this->request->data["imgs"][0]["tmp_name"] != ''){
+                print_r($this->request->data["imgs"][0]["tmp_name"]);exit;
                 foreach($this->request->data["imgs"] as $img){
                     $picPath = 'media/design/' . date("d_M_y_h_m_s") . $img["name"];
                     move_uploaded_file($img["tmp_name"], WWW_ROOT . $picPath );
@@ -171,7 +194,7 @@ class DesignController extends AppController
             
             if ($this->Design->save($design)) {
                 $this->Flash->success(__('The design has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'tailorview',$design->user_id]);
             } else {
                 $this->Flash->error(__('The design could not be saved. Please, try again.'));
             }
@@ -191,11 +214,12 @@ class DesignController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $design = $this->Design->get($id);
+        $uid= $design->user_id;
         if ($this->Design->delete($design)) {
             $this->Flash->success(__('The design has been deleted.'));
         } else {
             $this->Flash->error(__('The design could not be deleted. Please, try again.'));
         }
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'tailorview',$uid]);
     }
 }
