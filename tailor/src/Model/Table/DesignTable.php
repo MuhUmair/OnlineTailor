@@ -38,7 +38,7 @@ class DesignTable extends Table
         $this->belongsTo('Users', [
             'foreignKey' => false,
             'queryBuilder' => function ($q) {
-                return $q->where(["User.id" => "Design.User_id"]); // Full conditions for filtering
+                return $q->where(["Design.User_id" => "User.id"]); // Full conditions for filtering
             }
             
         ]);

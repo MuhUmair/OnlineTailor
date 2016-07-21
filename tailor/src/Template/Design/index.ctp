@@ -47,8 +47,28 @@
                 <div class="sixteen wide mobile  eleven wide tablet eleven wide computer column padding-xs-2em paddingL0 paddingR0 paddingT0" style="">
                     <div class="ui segment remove-border remove-border-radius paddingL0" style="margin-top: 1em; text-align: left;">
                         <i class="sidebar big icon OTSide-Menu visible-xs-inline-block" style='margin-top: -12px;color: black;'></i>
-                        <h1 class="ui left aligned header main-text-color" style="font-weight: normal;display: inline-block;margin-top: 0px;">Designs</h1>
-                        <?php if( isset($cUser) && $cUser['userType'] == 1) { ?>
+                        <h1 class="ui left aligned header main-text-color" style="font-weight: normal;display: inline-block;margin-top: 0px;">Designs
+                        <?php 
+                            if(isset($this->request->params['pass'][0]) && $this->request->params['pass'][0] == "1"){
+                                echo "Mokawar";
+                             }else if(isset($this->request->params['pass'][0]) && $this->request->params['pass'][0] == "2"){
+                                echo "Mokawar - Printed";
+                             }else if(isset($this->request->params['pass'][0]) && $this->request->params['pass'][0] == "3"){
+                                echo "Mokawar - Model";
+                             }else if(isset($this->request->params['pass'][0]) && $this->request->params['pass'][0] == "4"){
+                                echo "Jalabeya";
+                             }else if(isset($this->request->params['pass'][0]) && $this->request->params['pass'][0] == "5"){
+                                echo "Moroccan Dresses";
+                             }else if(isset($this->request->params['pass'][0]) && $this->request->params['pass'][0] == "6"){
+                                echo "Dresses";
+                             }else if(isset($this->request->params['pass'][0]) && $this->request->params['pass'][0] == "7"){
+                                echo "Dantail";
+                             }else if(isset($this->request->params['pass'][0]) && $this->request->params['pass'][0] == "8"){
+                                echo "Abaya";
+                             } 
+                            if( isset($cUser) && $cUser['userType'] == 1) { 
+                        ?>
+                        </h1>
                         <?= $this->Html->link(__('Add Design'), ['action' => 'add'], [ "style" => "float:right;", "class" => "ui primary button label-blue-blackBG-color color-white"]) ?>
                         <?php } ?>
                     </div>

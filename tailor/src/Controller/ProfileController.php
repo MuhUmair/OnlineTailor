@@ -107,7 +107,20 @@ class ProfileController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    
+    public function ratedp(){
+        if ($this->request->is('post')) {
+            $udrating = TableRegistry::get('Udrating');
+            $user = TableRegistry::get('Users');
+            $udratingEnt = $udrating->find('all')->where(['ProfileID' => $this->request->data['userID']]);
+            $usersR = "<ul>";
+            foreach ($udratingEnt as $s){
+                $u = $user->find("all")->where(["id" => $s->userID])->first();
+                $usersR .= "<li>" .$u['fName'] ." ". $u['lName'] . "</li>"; 
+            }
+            $usersR .= "</ul>";
+            print_r( $usersR);exit;
+        }
+    }
     public function rated(){
         if ($this->request->is('post')) {
             $udrating = TableRegistry::get('Udrating');
@@ -159,7 +172,11 @@ class ProfileController extends AppController
             $profile = $this->Profile->patchEntity($profile, $this->request->data);
             if ($this->Profile->save($profile)) {
                 $this->Flash->success(__('The profile has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                //if($profile->user->userType == 1){
+                    return $this->redirect(['action' => 'view']);
+                //}else{
+                //    return $this->redirect(['action' => 'index']);
+                //}
 
             } else {
                 $this->Flash->error(__('The profile could not be saved. Please, try again.'));

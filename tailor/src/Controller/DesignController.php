@@ -73,12 +73,16 @@ class DesignController extends AppController
     public function view($id = null)
     {
         $designimage = TableRegistry::get('Designimage');
-        
+        $dUser = TableRegistry::get('Users');
         $design = $this->Design->get($id, [
             'contain' => ["Designtype", "Users", "Profile"]
             
         ]);
-        
+        //print_r($design);exit;
+        $designt = TableRegistry::get('DesignType');
+        $design->designtype = $designt->find("all")->where(["id" => $design->designType_ID])->first();
+        //$design->user = $dUser->find("all")->where($design->user_id);
+        $design->user = $dUser->find("all")->where(["id" => $design->user_id]);
         $design->imgs = $designimage->find("all")->where(["design_ID" => $id]);
         $this->set('design', $design);
         $this->set('_serialize', ['design']);
@@ -179,9 +183,9 @@ class DesignController extends AppController
             $design->user_id = $this->request->data["tailorID"];
             $design->designType_ID = $this->request->data["designTypeID"];
             if(isset($this->request->data["imgs"]) && isset($this->request->data["imgs"][0]["tmp_name"]) && $this->request->data["imgs"][0]["tmp_name"] != ''){
-                print_r($this->request->data["imgs"][0]["tmp_name"]);exit;
+                //print_r($this->request->data["imgs"][0]["tmp_name"]);exit;
                 foreach($this->request->data["imgs"] as $img){
-                    $picPath = 'media/design/' . date("d_M_y_h_m_s") . $img["name"];
+                    $picPath = 'media/design/' . date("d_M_y_h_m_s") .str_replace('-', ' ', $img["name"]); ;
                     move_uploaded_file($img["tmp_name"], WWW_ROOT . $picPath );
                     //$this->request->data["avatar"] = $picPath ;
                     
@@ -221,5 +225,9 @@ class DesignController extends AppController
             $this->Flash->error(__('The design could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'tailorview',$uid]);
+    }
+    
+    public function process($id=null){
+        
     }
 }

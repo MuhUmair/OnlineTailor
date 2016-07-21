@@ -26,7 +26,7 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['add','login','signup']);
+        $this->Auth->allow(['add','login','signup','activate']);
     }
 
     public function login(){
@@ -39,7 +39,11 @@ class UsersController extends AppController
                 if($user["isActive"] == 1)
                 {
                     $this->Auth->setUser($user);
-                    return $this->redirect($this->Auth->redirectUrl());
+                    if($user["userType"] == 1){
+                        return $this->redirect(["controller" => "profile", 'action' => 'view']);
+                    }else{
+                        return $this->redirect($this->Auth->redirectUrl());
+                    }
                 }else{
                     $user = $this->Users->newEntity();
                     $this->Flash->error(__('Profile not acticvated. Please contact admin'), [
@@ -60,10 +64,39 @@ class UsersController extends AppController
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
+    public function index($id = null)
     {
+        $user = "";
         //print_r($user);exit;
-        $user = $this->paginate($this->Users->find("all")->where(["userType" => "1"]));
+        if($this->request->is('post')){
+            $dc = $this->request->data["MType"];
+            $dn = explode(" ",$this->request->data["tailor_name"]) ;
+            if(isset($dc) && $dc != ""){
+                if($dc == "free")
+                    $dc = ["Users.mType" => 1];
+                else if($dc == "silver")
+                    $dc = ["Users.mType" => 2];
+                else if($dc == "gold")
+                    $dc = ["Users.mType" => 3];
+            }
+            
+            if(isset($dn) && is_array($dn)){
+                //print_r($dn[0]);exit;
+                $dn = ["Users.fName LIKE" => "%". $dn[0]."%"];
+            }
+            //print_r($dc);exit;
+            $user = $this->paginate($this->Users->find("all")->where(["userType" => $this->request->data["uType"],$dn ,$dc]));
+            $user->uType = $this->request->data["uType"];
+        }else{
+            if($id == null){
+                $user = $this->paginate($this->Users->find("all")->where(["userType" => "1"]));
+                $user->uType = 1;
+            }else{
+                $user = $this->paginate($this->Users->find("all")->where(["userType" => "2"]));
+                $user->uType = 2;
+            }
+        }
+        
         $this->viewBuilder()->layout('admin_layout');
                 //print_r($user);exit;
 //        $result = $this->User->find("getUsers");
@@ -141,15 +174,11 @@ class UsersController extends AppController
                 $this->request->data["isNews"] = 1;
             }
             //print_r($this->request->data);exit;
-            if($this->request->data["g-recaptcha-response"] != ''){
+            if($this->request->data["g-recaptcha-response"] != '')
+            {
                 $user = $this->Users->patchEntity($user, $this->request->data);
                 $user->username = $user->email;
-                if($user->userType == 2){
-                    $user->isActive = 1;
-                    $msg = "Dear Customer welcome to Online Tailor";
-                }else{
-                    $msg = "Dear Tailor welcome to Online Tailor. Your account will be activated with in 24 hours.";
-                }
+                
                 if ($this->Users->save($user)) {
                     $pTable  = \Cake\ORM\TableRegistry::get("profile");
                     $profileObj = $pTable->newEntity();
@@ -165,13 +194,26 @@ class UsersController extends AppController
                     $profileObj->happyCustomerCount = 0;
                     $profileObj->lat = "0";
                     $profileObj->glong = '0';
+                    if($user->userType == 2){
+                        //$user->isActive = 1;
+                        $msg = "Dear Customer welcome to Online Tailor <a href='http://planesolutions.net/PandoraDesign/Tailor/users/activate/". $user->id ."' >Activate</a>";
+                    }else{
+                        $msg = "Dear Tailor welcome to Online Tailor. Your account will be activated with in 24 hours.";
+                    }
+                    $headers = "From: " . strip_tags($_POST['req-email']) . "\r\n";
+                    $headers .= "Reply-To: ". strip_tags($_POST['req-email']) . "\r\n";
+                    $headers .= "CC: susan@example.com\r\n";
+                    $headers .= "MIME-Version: 1.0\r\n";
+                    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
                     if($pTable->save($profileObj)){
-                        mail($user->email,"Welcome to Online Tailor",$msg);
+                        mail($user->email,"Welcome to Online Tailor.",$msg,$headers);
                         $this->Flash->success(__('Please check your inbox'));
                         return $this->redirect([ 'action' => 'login']);
                     }
                 }
-            } else {
+            } 
+            else 
+            {
                 $this->Flash->error(__('Are you robot?'));
             }
         }
@@ -225,6 +267,19 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
     
+    public function activate($id){
+        $user = $this->Users->get($id);
+        
+        if($user->isActive == 0)
+            $user->isActive = 1;
+        
+        if ($this->Users->save($user)) {
+            $this->Flash->success(__('Successfully activate your account.'));
+        } else {
+            $this->Flash->error(__('Something went wrong.'));
+        }
+        return $this->redirect(['action' => 'login']);
+    }
     public function logout()
     {
         return $this->redirect($this->Auth->logout());

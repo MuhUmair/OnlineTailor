@@ -39,13 +39,24 @@
                                 <div class="ui grid">
                                     <div class="two column row">
                                         <div class="left floated column">
-                                            <h1 class="ui header color-white">Tailor Profile</h1>
+                                            <h1 class="ui header color-white">
+                                                <?php if($cUser["userType"] == 1) { ?>
+                                                    Tailor 
+                                                <?php } else { ?>
+                                                    User
+                                                <?php }?>
+                                                    Profile
+                                            </h1>
                                         </div>
                                         <div class="right floated column">
                                             <div class="remove-circle ui tag labels">
+                                                
                                                 <?php if($this->request->params['action'] != 'index'){ ?>
-                                                    <?= $this->Html->link(__('Back to '. $this->request->params['controller'].'s'), ['action' => 'index'],["class" => "remove-circle ui label floatR color-white label-blackBG-color", "style" => "font-size: 14px;"]) ?>
-                                                <?php }else{ ?>
+                                                    <?php if($this->request->params['controller'] == "Profile" && $cUser["userType"] == "1"){ ?>
+                                                        <?= $this->Html->link(__('Back to Home'), ['controller' => 'home', 'action' => 'index'],["class" => "remove-circle ui label floatR color-white label-blackBG-color", "style" => "font-size: 14px;"]) ?>
+                                                    <?php } else {?>
+                                                        <?= $this->Html->link(__('Back to '. $this->request->params['controller'].'s'), ['action' => 'index'],["class" => "remove-circle ui label floatR color-white label-blackBG-color", "style" => "font-size: 14px;"]) ?>
+                                                    <?php } }else{ ?>
                                                     <?= $this->Html->link(__('Back to Home'), ['controller' => 'home', 'action' => 'index'],["class" => "remove-circle ui label floatR color-white label-blackBG-color", "style" => "font-size: 14px;"]) ?>
                                                 <?php } ?>
                                                 <?php //print_r( $this->request->params) ?>

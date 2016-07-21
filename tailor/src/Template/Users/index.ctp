@@ -1,5 +1,11 @@
 <div class="user index large-9 medium-8 columns content">
     <h3><?= __('Tailors') ?></h3>
+    <form action="<?php echo $this->Url->build(["controller" => "users","action" => "index"]);?>" method="post">  
+        <input type='text' name='tailor_name' placeholder="Name" />
+        <input type='text' name='MType' placeholder="Member Type" />
+        <input type='hidden' name='uType' value="<?php echo $user->uType ?>" placeholder="Member Type" />
+        <input type='submit'  value="search" />
+    </form>
     <table class="ui celled table" cellpadding="0" cellspacing="0">
         <thead>
             <tr>
@@ -11,7 +17,9 @@
                 
                 <th><?= $this->Paginator->sort('city') ?></th>
                 <th><?= $this->Paginator->sort('country') ?></th>
-                <th><?= $this->Paginator->sort('mType',["label" => "Member Type"]) ?></th>
+                <th><?= $this->Paginator->sort('mType',["label" => "Member Type"]) ?>
+                    
+                </th>
                 <th><?= $this->Paginator->sort('isActive',["label" => "Active"]) ?></th>
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
@@ -31,25 +39,28 @@
                     <?php 
                         $t = $user->mType;
                         if($t == '1'){
-                            echo "1. Free";
+                            echo "Free";
                         }else if($t == '2'){
-                            echo "2. Silver";
+                            echo "Silver";
                         }else if($t == '3'){
-                            echo "3. Gold";
+                            echo "Gold";
                         }
                     ?>
                 </td>
                 <td><?php 
                         $t = $user->isActive;
                         if($t == '0'){
-                            echo "1. Not";
+                            echo "Publish";
                         }else if($t == '1'){
-                            echo "2. Activated";
+                            echo "Unpublished";
                         }
                     ?></td>
                 <td class="actions">
                     <div class="ui breadcrumb">
-                        <?= $this->Html->link(__('Change Status'), ['action' => 'edit', $user->id]) ?>
+                        <?= $this->Html->link(__('Change Status'), ['action' => 'edit', $user->id],["class" => "section"]) ?>
+                        
+                        <div class="divider"> / </div>
+                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete')],["class" => "section"]) ?>
                     </div>
                     
                 </td>

@@ -92,7 +92,9 @@
                                 <div class="column">
                                     <i class="icon large user" aria-hidden="true" style="margin-top: -5px;"></i>
                                     <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;">
-                                        <?= $this->Html->link(__($design->user->fName ." ". $design->user->lName), ['controller' => 'profile', 'action' => 'view', $design->profile->id]) ?> 
+                                        <?php foreach($design->user as $s) { //print_r($s);  ?>
+                                        <?= $this->Html->link(__($s->fName ." ". $s->lName), ['controller' => 'profile', 'action' => 'view', $design->profile->id]) ?> 
+                                        <?php } ?>
                                     </h3>
                                 </div>
                                 <div class="column">
@@ -107,15 +109,16 @@
                             </div>
                             
                                 <div class="three column row">
-                                    
+                                    <?php //print_r($cUser["id"])?>
                                     <div class="column">
                                         <?php if(!isset($cUser) || $cUser["userType"] == 2 || $cUser["userType"] == 3) { ?>
                                         <div class="ui tag labels rigth-arrow remove-circle ">
                                             <a class="ui label product-detail-label label-blue-blackBG-color color-white">
                                                 Order Now
                                             </a>
+                                            <?= $this->Html->link(__('Order Now'), ['action' => 'process', $design->id], ["class" => "ui label product-detail-label label-blue-blackBG-color color-white"]) ?> 
                                         </div>
-                                        <?php } else if(isset($cUser) || $cUser["userType"] == 1){ ?>
+                                        <?php } else if(isset($cUser) && $cUser["userType"] == 1 && $cUser["id"] == $design->user_id){ ?>
                                         <div class="ui tag labels rigth-arrow remove-circle ">
                                             <?= $this->Html->link(__('Edit Design'), ['action' => 'edit', $design->id], ["class" => "ui label product-detail-label label-blue-blackBG-color color-white"]) ?> 
                                             
@@ -138,15 +141,7 @@
                 </div>
                 <?php echo $this->element('sidebar-bottom'); ?>
         <script type="text/javascript">
-                var gLat = 0;
-                var gLong = 0;
-                function initMaps() {
-                    var mapDiv = document.getElementById('map');
-                    var map = new google.maps.Map(mapDiv, {
-                        center: {lat: gLat , lng: gLong},
-                        zoom: 14
-                    });
-                }  
+                
                 $(function(){
                     s();
                     

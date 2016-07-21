@@ -86,7 +86,7 @@
                             <div class="three column row">
                                 <?php if($profile->user->userType == "1" ){ ?>
                                 <div class="column">
-                                    <h3 class="ui header" style="display: inline-block;font-weight: normal;">Tailor Rating</h3>
+                                    <h3 class="ui header hrating" style="display: inline-block;font-weight: normal;cursor: pointer;">Tailor Rating</h3>
                                     <div class="ui large star rating" data-rating="<?php echo $profile->avrRating?>" data-max-rating="5" data-pid="<?php echo $profile->id ?>"></div>
                                     
                                 </div>
@@ -115,37 +115,94 @@
                                 <div class="column">
                                     
                                     <i class="icon large male" aria-hidden="true" style="margin-top: -5px;"></i>
+                                    <?php if($cUser['userType'] == 1) { ?>
                                     <h3 class="ui header" style="display: inline-block;font-weight: normal;margin-top: 0px;"><?= h($profile->happyCustomerCount)?> Happy customers</h3>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
+                        <div id="map"></div>
                     </div>
                 </div>
+
                 <?php echo $this->element('sidebar-bottom'); ?>
+<div class="ui basic modal">
+  <div class="header">Rated</div>
+  <div class="content">
+    <p></p>
+    <p></p>
+    <p></p>
+  </div>
+</div>
         <script type="text/javascript">
+            var gLat = 0;
+            var gLong = 0;
+            function initMaps() {
+                var mapDiv = document.getElementById('map');
+                var map = new google.maps.Map(mapDiv, {
+                    center: {lat: gLat , lng: gLong},
+                    zoom: 14
+                });
+            }  
+            function s(){
+                var addressM = $.get("https://maps.googleapis.com/maps/api/geocode/json?address=<?php echo $profile->city  ?>+<?php echo $profile->country  ?>" ,
+                    function(){
+                        console.log(addressM["responseJSON"]["results"][0]["geometry"]["location"]);
+                        gLat = addressM["responseJSON"]["results"][0]["geometry"]["location"]["lat"];
+                        gLong = addressM["responseJSON"]["results"][0]["geometry"]["location"]["lng"];
+
+                        initMaps();
+                    }
+                );
+
+
+            }
             $(function(){
+                s();
+                    
+                var design_id = "<?php echo $design->id?>";
+
                 var user_id = "<?php echo $cUser['id']?>";
-                $('.rating')
-                        .rating({
-                            initialRating: 2,
-                    maxRating: 5
-                }).rating(
-                            'setting', 
-                            'onRate', 
-                            function(value) {
-                                var profile_id = $(this).data("pid");
-                                //alert( design_id );
-                                $.ajax({
-                                    method: "POST",
-                                    url: "<?php echo $this->Url->build(["controller" => "profile","action" => "rated"]);?>",
-                                    data: { userID: user_id , profileID: profile_id , rating: value }
-                                })
-                                .done(function( msg ) {
-                                      //alert( "Data Saved: " + msg );
-                                });
-                            }
-                        );
-                
-            });
-        
+                <?php if($cUser['userType'] == 1) { ?>
+                    var pid = "<?php echo $profile[id] ?>";
+                    $('.hrating').on("click", function(){
+                        $.ajax({
+                            method: "POST",
+                            url: "<?php echo $this->Url->build(["controller" => "profile","action" => "ratedp"]);?>",
+                            data: { userID: pid  }
+                        })
+                        .done(function( msg ) {
+                              //alert( "Data Saved: " + msg );
+                              $(".content").html(msg);
+                              $('.ui.basic.modal').modal('show');
+                        });
+                        
+                    });
+                    
+                <?php }else { ?>
+                    $('.rating')
+                            .rating({
+                                initialRating: 2,
+                        maxRating: 5
+                    }).rating(
+                                'setting', 
+                                'onRate', 
+                                function(value) {
+                                    var profile_id = $(this).data("pid");
+                                    //alert( design_id );
+                                    //$('.ui.modal').modal('show');
+                                    $.ajax({
+                                        method: "POST",
+                                        url: "<?php echo $this->Url->build(["controller" => "profile","action" => "rated"]);?>",
+                                        data: { userID: user_id , profileID: profile_id , rating: value }
+                                    })
+                                    .done(function( msg ) {
+                                          //alert( "Data Saved: " + msg );
+                                    });
+                                }
+                            );
+
+                    
+                <?php } ?>
+        });
         </script>

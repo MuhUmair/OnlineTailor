@@ -42,6 +42,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <a class="item" href="<?php echo $this->Url->build(["controller" => "users","action" => "index"]);?>">
                 Tailors
             </a>
+            <a class="item" href="<?php echo $this->Url->build(["controller" => "users","action" => "index/1"]);?>">
+                User
+            </a>
             
             <a class="item" href="<?php echo $this->Url->build(["controller" => "peoplesaying","action" => "index"]);?>">
                 What People Say

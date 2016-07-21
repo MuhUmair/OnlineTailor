@@ -84,7 +84,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         </a>
                         
                     </div>
-                    <?php if(isset($cUser) && $cUser['userType'] != 1 ){ ?>
+                    <?php //if(isset($cUser) && $cUser['userType'] != 1 )
+                        { ?>
                     <div class="ui  item hidden-xs" tabindex="0">
                         <a href="<?php echo $this->Url->build(["controller" => "profile","action" => "index"]);?>" style="color:black;" class="ui item hidden-xs">
                         Find a tailor <!--<i class="dropdown icon"></i>-->
@@ -115,8 +116,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         Find tailors <i class="dropdown icon"></i>
                         <div class="menu transition hidden" tabindex="-1">
                             <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/1"]);?>">Mokawar</a>
-                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/2"]);?>">Printed</a>
-                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/3"]);?>">Model</a>
+                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/2"]);?>">Mokawar - Printed</a>
+                            <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/3"]);?>">Mokawar - Model</a>
                             <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/4"]);?>">Jalabeya</a>
                             <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/5"]);?>">Moroccan Dresses</a>
                             <a class="item" href="<?php echo $this->Url->build(["controller" => "design","action" => "index/6"]);?>">Dresses</a>

@@ -95,7 +95,7 @@
                                     
                                     <div class="six wide column">
                                         <div class="ui padded segment remove-border paddingT0 translatebg" style="">
-                                            <button class="ui grey button remove-border-radius signupBtn">Sign up <span class="visible-lg-inline-block">Now</span></button>
+                                            <button class="ui grey button remove-border-radius signupBtn" style="display:none">Sign up <span class="visible-lg-inline-block">Now</span></button>
                                         </div>
                                     </div>
                                     <div class="g-recaptcha" data-sitekey="6LfoxiQTAAAAALABZJ7D2PBKsYItBalnrlQ81wJO"></div>
@@ -113,11 +113,14 @@
             $(function(){
                 var mPass = $(".mPassword");
                 var cPass = $(".cPassword");
+                var sBtn = $(".signupBtn");
                 $(".cPassword, .mPassword").on("keydown keyup", function(){
                     if(mPass.val() != "" && mPass.val().length > 5 && mPass.val() == cPass.val()){
                         cPass.css({'border-color' : 'green'});    
                         mPass.css({'border-color' : 'green'});
+                        sBtn.css({"display":"inline-block"});
                     }else{
+                        sBtn.css({"display":"none"});
                         cPass.css({'border-color' : 'red'});    
                         mPass.css({'border-color' : 'red'});
                     }

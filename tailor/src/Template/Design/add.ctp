@@ -31,10 +31,13 @@
                             <?php
                                 echo $this->Form->hidden('tailorID',["value" => $cUser['id']]);
                                 echo "<label>Design Name</label>";
+                                echo $this->Form->input('designName',['label' => false]);
+                                echo "<br />";
+                                echo "<label>Design Type</label>";
                                 echo $this->Form->input('designTypeID',['label' => false, "class" => "dType",
                                     'options' => [  '1' => 'Mokawar', 
-                                                    '2' => 'Printed', 
-                                                    '3' => 'Model', 
+                                                    '2' => 'Mokawar - Printed', 
+                                                    '3' => 'Mokawar - Model', 
                                                     '4' => 'Jalabeya',
                                                     '5' => 'Moroccan Dresses',
                                                     '6' => 'Dresses',
@@ -42,15 +45,14 @@
                                                     '8' => 'Abaya',
                                                  ]
                                 ]);
-                                echo $this->Form->input('designName', ["type" => "hidden", "class" => "dName"]);
                                 echo "<br />";
                                 echo $this->Form->input('description');
                                 echo "<br />";
                                 echo $this->Form->input('fabricName');
                                 echo "<br />";
                                 echo "<br />";
-                                echo $this->Form->input('status');
-                                echo "<br />";
+                                //echo $this->Form->input('status');
+                                //echo "<br />";
                                 echo $this->Form->input('price');
                                 echo "<div id='imgCon' ><br />";
                                 echo $this->Form->input('imgs', [ "type" => "file", "label" => false, "name" => "imgs[]"]);
