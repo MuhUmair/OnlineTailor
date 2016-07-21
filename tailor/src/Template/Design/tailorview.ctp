@@ -1,4 +1,4 @@
-<div class="design index large-9 medium-8 columns content" style="display:none;">
+    <div class="design index large-9 medium-8 columns content" style="display:none;">
     <h3><?= __('Design') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>

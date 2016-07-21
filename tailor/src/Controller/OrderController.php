@@ -18,7 +18,7 @@ class OrderController extends AppController
      */
     public function index()
     {
-        $order = "";//$this->paginate($this->Order);
+        $order = $this->Order;
 
         $this->set(compact('order'));
         $this->set('_serialize', ['order']);
